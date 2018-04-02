@@ -7,7 +7,7 @@ public class StationV implements Runnable {
 	private List <Pasagir> pasagiriVestibul = new ArrayList<> ();
 	private List <Pasagir> pasagiriPeron = new ArrayList<> ();
 	private List <Potyag> potyagi = new ArrayList<> ();
-	private int kilkistPasagiriv = 8800;
+	private int kilkistPasagiriv = 100;//8800
 	private int praporKinezGeneraziiPasagiriv = 0;
 	private String nazvaStation;
 	
