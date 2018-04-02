@@ -1,0 +1,25 @@
+DepoDarniza 2 3 4 Vagon VagonPasagir 9004 220 0
+DepoDarniza 2 3 4 Vagon VagonPasagir 9005 220 0
+DepoDarniza 2 3 4 Vagon VagonPasagir 9006 220 0
+DepoDarniza 2 3 4 Vagon VagonMashinist 9010 210 0
+DepoDarniza 2 3 4 Vagon VagonMashinist 9011 210 0
+DepoDarniza 2 3 4 Potyag 1 DepoDarniza Mashinist Ivanenko 1111111111 Vagon VagonMashinist 1 210 0
+DepoDarniza 2 3 4 Potyag 1 DepoDarniza Mashinist Ivanenko 1111111111 Vagon VagonPasagir 2 220 0
+DepoDarniza 2 3 4 Potyag 1 DepoDarniza Mashinist Ivanenko 1111111111 Vagon VagonPasagir 3 220 0
+DepoDarniza 2 3 4 Potyag 1 DepoDarniza Mashinist Ivanenko 1111111111 Vagon VagonPasagir 4 220 0
+DepoDarniza 2 3 4 Potyag 1 DepoDarniza Mashinist Ivanenko 1111111111 Vagon VagonMashinist 5 210 0
+DepoDarniza 2 3 4 Potyag 2 DepoGeroivDnipra Mashinist Petrenko 2222222222 Vagon VagonMashinist 6 210 0
+DepoDarniza 2 3 4 Potyag 2 DepoGeroivDnipra Mashinist Petrenko 2222222222 Vagon VagonPasagir 7 220 0
+DepoDarniza 2 3 4 Potyag 2 DepoGeroivDnipra Mashinist Petrenko 2222222222 Vagon VagonPasagir 8 220 0
+DepoDarniza 2 3 4 Potyag 2 DepoGeroivDnipra Mashinist Petrenko 2222222222 Vagon VagonPasagir 9 220 0
+DepoDarniza 2 3 4 Potyag 2 DepoGeroivDnipra Mashinist Petrenko 2222222222 Vagon VagonMashinist 10 210 0
+DepoDarniza 2 3 4 Potyag 3 DepoDarniza Mashinist Kozak 4444444444 Vagon VagonMashinist 11 210 0
+DepoDarniza 2 3 4 Potyag 3 DepoDarniza Mashinist Kozak 4444444444 Vagon VagonPasagir 12 220 0
+DepoDarniza 2 3 4 Potyag 3 DepoDarniza Mashinist Kozak 4444444444 Vagon VagonPasagir 13 220 0
+DepoDarniza 2 3 4 Potyag 3 DepoDarniza Mashinist Kozak 4444444444 Vagon VagonPasagir 14 220 0
+DepoDarniza 2 3 4 Potyag 3 DepoDarniza Mashinist Kozak 4444444444 Vagon VagonMashinist 15 210 0
+DepoDarniza 2 3 4 Potyag 4 DepoDarniza Mashinist Sidorenko 3333333333 Vagon VagonMashinist 9008 210 0
+DepoDarniza 2 3 4 Potyag 4 DepoDarniza Mashinist Sidorenko 3333333333 Vagon VagonPasagir 9001 220 0
+DepoDarniza 2 3 4 Potyag 4 DepoDarniza Mashinist Sidorenko 3333333333 Vagon VagonPasagir 9002 220 0
+DepoDarniza 2 3 4 Potyag 4 DepoDarniza Mashinist Sidorenko 3333333333 Vagon VagonPasagir 9003 220 0
+DepoDarniza 2 3 4 Potyag 4 DepoDarniza Mashinist Sidorenko 3333333333 Vagon VagonMashinist 9009 210 0
