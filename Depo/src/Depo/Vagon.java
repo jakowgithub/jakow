@@ -1,7 +1,7 @@
 package Depo;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -34,7 +34,7 @@ public class Vagon implements Serializable {
 	private String nazvaDepoKey;
 	
 	@DatabaseField(persisted = false)
-	private List <Pasagir> pasagiriVagon = new ArrayList<Pasagir> ();
+	private CopyOnWriteArrayList <Pasagir> pasagiriVagon = new CopyOnWriteArrayList <Pasagir> ();
 	
 	Vagon (int nomerV, String nazvaV){
 		super();

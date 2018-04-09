@@ -1,13 +1,12 @@
 package Depo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EskalatorV implements Runnable {
-	List <Pasagir> pasagiriEskalator = new ArrayList<Pasagir> ();
-	String nazvaEskalatora;
-	int TimeProizdu;
-	final StationV station;
+	private CopyOnWriteArrayList <Pasagir> pasagiriEskalator =  new CopyOnWriteArrayList <Pasagir> ();
+	private String nazvaEskalatora;
+	private int TimeProizdu;
+	private final StationV station;
 	
 	EskalatorV (String nazvaEskalatora, int timeProizdu, StationV station) {
 		super();
@@ -15,8 +14,8 @@ public class EskalatorV implements Runnable {
 		this.TimeProizdu = timeProizdu;
 		this.station=station;
 	}
-	public List<Pasagir> getEskalator1() {return pasagiriEskalator;}
-	public void setEskalator1(List<Pasagir> pas) {this.pasagiriEskalator = pas;}
+	public CopyOnWriteArrayList <Pasagir> getEskalator() {return pasagiriEskalator;}
+	public void setEskalator(CopyOnWriteArrayList <Pasagir> pas) {this.pasagiriEskalator = pas;}
 	public String getNazvaEskalatora() {return nazvaEskalatora;}
 	public void setNazvaEskalatora(String nazvaEskalatora) {this.nazvaEskalatora = nazvaEskalatora;}
 	
@@ -28,14 +27,14 @@ try{ while (true) {
 	    
 	    synchronized (station.getPasagiriVestibul()) {
 	    if (station.getPasagiriVestibul().isEmpty()) station.getPasagiriVestibul().wait();		
-		pasagiriEskalator.addAll(station.getPasagiriVestibul());		
+		this.getEskalator().addAllAbsent(station.getPasagiriVestibul());
+	    //pasagiriEskalator.addAll(station.getPasagiriVestibul());		
 		System.out.println(this.nazvaEskalatora+" "+pasagiriEskalator.toString());
-		station.getPasagiriVestibul().removeAll(pasagiriEskalator);
+		station.getPasagiriVestibul().removeAll(this.getEskalator());
 		}
 		Thread.sleep (TimeProizdu);//1400
-		 synchronized (station.getPasagiriPeron()) {station.getPasagiriPeron().addAll(pasagiriEskalator);}
-		//if (!StationV.pasagiriPeron.isEmpty()) synchronized (StationV.pasagiriPeron) {StationV.pasagiriPeron.notifyAll();}
-		pasagiriEskalator.clear();		    		
+		synchronized (station.getPasagiriPeron()) {station.getPasagiriPeron().addAll(this.getEskalator());}
+		this.getEskalator().clear();	    		
 		}}			
 catch (InterruptedException ie){ ie.printStackTrace();}	
 System.out.println(this.nazvaEskalatora+" Potok "+Thread.currentThread().getName()+ " zakinchen.");	

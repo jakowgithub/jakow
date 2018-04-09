@@ -23,7 +23,18 @@ public class Mashinist implements Serializable{
 	@DatabaseField()
 	private int dosvid;
 
-Mashinist(String pr,  String nom){super();pIB=pr;iPN=nom;dosvid=0;}
+Mashinist(String pr,  String nom) {
+	super(); 
+	pIB=pr; 
+	iPN=nom;
+	dosvid=0;
+	}
+Mashinist(String pr,  String nom, int dos) {
+	super(); 
+	pIB=pr; 
+	iPN=nom;
+	dosvid=dos;
+	}
 Mashinist(){}
 
 String getPIB (){return pIB; }
@@ -37,7 +48,7 @@ void setDosvid (int d){dosvid=d;}
 long getSerialVersionUID(){return sVer;}
 @Override
 public String toString() {
-	return "Mashinist [pIB=" + pIB + ", iPN=" + iPN + ", dosvid=" + dosvid + "]";
+	return "Mashinist ["+ pIB + ", iPN " + iPN + ", dosvid " + dosvid + "]";
 }
 
 }

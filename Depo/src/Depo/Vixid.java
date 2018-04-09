@@ -11,13 +11,15 @@ public class Vixid {
 		if (p1.getIdPasagir() < p2.getIdPasagir()) return -1;
 		return 0;
 		}};
-	static PriorityBlockingQueue <Pasagir>  pasagiriVixid = new PriorityBlockingQueue <>(80000, comparatorPasagir);	
+	static PriorityBlockingQueue <Pasagir>  pasagiriVixid = new PriorityBlockingQueue <>(240000, comparatorPasagir);	
 	
 	static void drukPasagiriVixid () {
 		
 		try {
-	    	MetroRuch.getPotoki().forEach(potok->{try {potok.join();} catch (InterruptedException ie) {ie.printStackTrace();}});
-	    	Thread.sleep(1500);
+	    	MetroRuch.getPotoki().forEach(potok->{
+	    		try {potok.join();
+	    		    } catch (InterruptedException ie) {ie.printStackTrace();}});
+	    	Thread.sleep(700);
 	    	while (!pasagiriVixid.isEmpty()) {System.out.println("pasagiriVixid " + pasagiriVixid.poll().getPIB());}
 		   } catch (InterruptedException ie) {ie.printStackTrace();} 
 	}

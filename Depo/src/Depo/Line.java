@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  porydok robotu:
@@ -21,6 +22,7 @@ public class Line {
 	private int line_T [];//masiv elementiv tuda, 1 element=100 m = dovgina potyaga
 	private int line_N [];//masiv elementiv nazad, 1 element=100 m = dovgina potyaga
 	private ArrayList <Potyag> potyagNaLinii;//masiv potyagiv na linii
+	//static CopyOnWriteArrayList <Poizdka> poizdki = new CopyOnWriteArrayList<>();//date,time,line,mashinist
 	private int zagalnaL, tmp, distanziya, firstTime, period, prapor1, prapor2, 
 		        praporSt_T,praporSt_N, lichilnikTimer;
 	private int []indexSt_T;//index Stanzij v masive elementov tuda
@@ -34,6 +36,7 @@ public class Line {
 	int []  getline_N (){return line_N; }
 	Timer getTimer (){return timer;}
 	void setLichilnikTimer(int lt){lichilnikTimer=lt;}
+	//CopyOnWriteArrayList <Poizdka> getPoizdki (){return poizdki; }
 	
 Line (int nomerLinii){
 	
@@ -98,7 +101,7 @@ boolean unikalMashinist (String pib, ArrayList<Potyag> pnl){
 	for (Potyag p: pnl) {if (pib.equals(p.getMashinist().getPIB())) return false;}
 	return true;	
 }
-//vipuskNaLiniu vipuskNaLiniu vipuskNaLiniu vipuskNaLiniu vipuskNaLiniu vipuskNaLiniu vipuskNaLiniu
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void vipuskNaLiniu (Potyag ... potyag){
 
  if ((potyag.length>0)&&((potyag.length+potyagNaLinii.size()) < zagalnaL-1)){
@@ -131,8 +134,8 @@ void vipuskNaLiniu (Potyag ... potyag){
 if (potyagNaLinii.size() > 0) distanziya=(int)((2*zagalnaL)/(potyagNaLinii.size()));	
 //viznachau startPosition potyagiv na linii z uraxuvannyam distanzii,
 for (int i=0; i<potyagNaLinii.size(); i++){
-	int dst=(potyagNaLinii.size()-1-i)*distanziya;
-	potyagNaLinii.get(i).setCurrentPosition(dst);
+	 int dst=(potyagNaLinii.size()-1-i)*distanziya;
+	 potyagNaLinii.get(i).setCurrentPosition(dst);
 //nomeri potyagiv v masiv Line_T abo Line_N dlya ruchu 
 	if (dst<zagalnaL) line_T[dst]=potyagNaLinii.get(i).getNomerPotyga(); 
 	else              line_N[dst-zagalnaL]=potyagNaLinii.get(i).getNomerPotyga();
@@ -142,24 +145,26 @@ for (int i=0; i<potyagNaLinii.size(); i++){
     	 firstTime=0;
 	     period=500;//6000, 0,5s-dlya otladki
 	     timer=new Timer("Timer1");
-	     timer.schedule(new ZapuskPotyaga(0, distanziya),firstTime, period);
+	     timer.schedule(new ZapuskPotyaga(0, this.getNazvaLinii()),firstTime, period);     
 	     }
 }
 else {System.out.println("Vidsutnij potyag abo kilkist potygiv > zagalna dovgina linii");}
 }	
 
 class ZapuskPotyaga extends TimerTask {
-	int currentPosition, distanziya;	
-    ZapuskPotyaga(int cP, int d){
+	int currentPosition;
+	String nazvaLinii;
+    ZapuskPotyaga(int cP, String nl){
 		currentPosition=cP;
-		distanziya=d;
+		nazvaLinii=nl;
 }
 public void run() {
                    
-if (lichilnikTimer > 120) { 
+if (lichilnikTimer > 180) { 
 	timer.cancel();
 	lichilnikTimer=0; 
-	Vixid.drukPasagiriVixid();
+	if (!Vixid.pasagiriVixid.isEmpty()) Vixid.drukPasagiriVixid();
+	if (!MetroRuch.poizdki.isEmpty()) ZapisFile.saveFile(MetroRuch.poizdki);
 }
 else{ System.out.println("TR "+Arrays.toString(line_T)); System.out.println("NR "+Arrays.toString(line_N)); 
 //druk v SchemaMetro line_T ta Line_N   
@@ -177,21 +182,14 @@ for (int k=0; k<line_T.length; k++){
 				if(line_T[i]==p.getNomerPotyga()) break;
 				tmp3++;
 				}			
-			for (int j=0; j<indexSt_T.length; j++){//dosyag potyg stanzii?
-			     if(i==indexSt_T[j]){
-			     praporSt_T=1; 
-			     
-                //vigruzka/zagruzka pasagiriv z/v potyaga	
+			for (int j=0; j<indexSt_T.length; j++){
+				//dosyag potyg stanzii? 
+				if(i==indexSt_T[j]){  //60 elementiv, 0,16,36,54-index Station_T
+			     praporSt_T=1; 	     
+               
+			     //vigruzka/zagruzka pasagiriv z/v potyaga	
 			    // yaka Station?
 			     StationV station = MetroRuch.stationsRed.get(j);
-			    /** switch (i) {
-				case 0:  station = MetroRuch.stationsRed.get(0); break;
-				case 16: station = MetroRuch.stationsRed.get(1); break;
-				case 36: station = MetroRuch.stationsRed.get(2); break;
-				case 54: station = MetroRuch.stationsRed.get(3); break;
-				default: station = MetroRuch.stationsRed.get(0); break;
-				}
-				*/
 			     synchronized (station.getPasagiriPeron()) {
 			    	 if (!potyagNaLinii.get(tmp3).getVsixPasagirivPotyaga().isEmpty()) potyagNaLinii.get(tmp3).vixidV5Potokov();
 			         if (!station.getPasagiriPeron().isEmpty()) potyagNaLinii.get(tmp3).vxidPv5Potokov(station, station.getPasagiriPeron());
@@ -214,13 +212,23 @@ for (int k=0; k<line_T.length; k++){
 }  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N
     if((0!=line_T [line_T.length-1]) &&
    	   (0==line_N[0])) {
-   	    //zbilshuu dosvid mashinista max=9000 poizdok (5r x 11 mis x 20 dib x 8 poizdok)
+   	    //zbilshuu dosvid mashinista max=10000 poizdok (5r x 11 mis x 22 dib x 8 poizdok)
     	for(Potyag p: potyagNaLinii){
     		if (line_T [line_T.length-1]==p.getNomerPotyga()){
-    			if (p.getMashinist().getDosvid()<9000) 
-    				p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
-    		break;
+    			if (p.getMashinist().getDosvid()<10000) p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+    			//stvoruu klas poizdka ta dodau v arraylist poizdki
+    	    	Poizdka fakt =  new Poizdka (p.getMashinist(), this.nazvaLinii+"_T");
+    	    	MetroRuch.poizdki.add(fakt);
+    	    	//zamina mashinistiv
+	    	    MetroRuch.driversRedTMP.add(p.getMashinist());
+	    	    if (MetroRuch.driversRedTMP.size() >= MetroRuch.driversRed.size()) {
+	    	    	MetroRuch.driversRed.addAll(MetroRuch.driversRedTMP);
+	    	    	MetroRuch.driversRedTMP.clear();	    
+	    	    	}
+	    	    if (!MetroRuch.driversRed.isEmpty()) p.setMashinist(MetroRuch.driversRed.poll());
+    		    break;
     		}}
+    	
     	line_N[0]=line_T [line_T.length-1];
    	    line_T [line_T.length-1]=0;
    	    
@@ -239,15 +247,7 @@ for (int k=0; k<line_T.length; k++){
 			     
 			   //vigruzka/zagruzka pasagiriv z/v potyaga	
 			  // yaka Station?
-				  StationV station = MetroRuch.stationsRed.get(3-j);
-				 /** switch (i) {
-				  case 0:  station = MetroRuch.stationsRed.get(3); break;
-				  case 18: station = MetroRuch.stationsRed.get(2); break;
-				  case 38: station = MetroRuch.stationsRed.get(1); break;
-				  case 54: station = MetroRuch.stationsRed.get(0); break;
-				  default: station = MetroRuch.stationsRed.get(0); break;
-					}
-					*/
+				  StationV station = MetroRuch.stationsRed.get(3-j);//60 elementiv, 0,18,38,54-index Station Line_N
 				  synchronized (station.getPasagiriPeron()) {
 				    if (!potyagNaLinii.get(tmp4).getVsixPasagirivPotyaga().isEmpty()) potyagNaLinii.get(tmp4).vixidV5Potokov();
 				    if (!station.getPasagiriPeron().isEmpty()) potyagNaLinii.get(tmp4).vxidPv5Potokov(station, station.getPasagiriPeron());
@@ -271,12 +271,21 @@ for (int k=0; k<line_T.length; k++){
   //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
     if((0!=line_N [line_N.length-1]) &&
    	   (0==line_T[0])) {
-    	//zbilshuu dosvid mashinista max=9000 poizdok (5r x 11 mis x 20 dib x 8 poizdok)
+    	//zbilshuu dosvid mashinista max=10000 poizdok (5r x 11 mis x 22 dib x 8 poizdok)
     	for(Potyag p: potyagNaLinii){
     		if (line_N [line_N.length-1]==p.getNomerPotyga()){
-    			if (p.getMashinist().getDosvid()<9000) 
-    				p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
-    		break;
+    			if (p.getMashinist().getDosvid() < 10000) p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+    			//stvoruu klas poizdka ta dodau v arraylist poizdki
+ 	    	       Poizdka fakt =  new Poizdka (p.getMashinist(), this.nazvaLinii+"_N");
+ 	    	       MetroRuch.poizdki.add(fakt);
+ 	    	      //zamina mashinistiv
+ 	    	    	MetroRuch.driversRedTMP.add(p.getMashinist());
+ 	    	    	if (MetroRuch.driversRedTMP.size() >= MetroRuch.driversRed.size()) {
+ 	    	    			   MetroRuch.driversRed.addAll(MetroRuch.driversRedTMP);
+ 	    	    			   MetroRuch.driversRedTMP.clear();	    
+ 	    	    	}
+ 	    	    	if (!MetroRuch.driversRed.isEmpty()) p.setMashinist(MetroRuch.driversRed.poll());
+    		        break;
     		}}
     	line_T[0]=line_N [line_N.length-1];
    	    line_N [line_N.length-1]=0;
@@ -289,8 +298,7 @@ for (int k=0; k<line_T.length; k++){
     lichilnikTimer++;   
 }
 }}
-
-//WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+//==========================================================================
 void vipuskNaLiniuM (Potyag [] mP){
 
 	 if ((mP.length>0)&&((mP.length+potyagNaLinii.size())<zagalnaL-1)){
@@ -336,21 +344,26 @@ void vipuskNaLiniuM (Potyag [] mP){
 	    	 firstTime=0;
 		     period=500;//6000, 0,5s-dlya otladki
 		     timer=new Timer("Timer2");
-		     timer.schedule(new ZapuskPotyaga2(0, distanziya),firstTime, period);
+		     //timer.schedule(new ZapuskPotyaga2(0, distanziya),firstTime, period);
+		     timer.schedule(new ZapuskPotyaga2 (0, this.getNazvaLinii()),firstTime, period); 
 		     }
 	}
 	else {System.out.println("Vidsutnij potyag abo kilkist potygiv > zagalna dovgina linii");}
 	}	
 
 	class ZapuskPotyaga2 extends TimerTask {
-		int currentPosition, distanziya;	
-	ZapuskPotyaga2(int cP, int d){
+		int currentPosition;
+		String nazvaLinii;
+	ZapuskPotyaga2(int cP, String nl){
 			currentPosition=cP;
-			distanziya=d;
+			nazvaLinii=nl;
 	}
 	public void run() {
 	                   
-	if(lichilnikTimer>120){timer.cancel();lichilnikTimer=0;}
+	if(lichilnikTimer>180){
+		timer.cancel();
+		lichilnikTimer=0;
+		}
 	else{ System.out.println("TB "+Arrays.toString(line_T)); System.out.println("NB "+Arrays.toString(line_N)); 
 	//druk v SchemaMetro line_T ta Line_N   
 	for (int k=0; k<line_T.length; k++){ 
@@ -368,7 +381,7 @@ void vipuskNaLiniuM (Potyag [] mP){
 					tmp3++;
 					}			
 				for (int j=0; j<indexSt_T.length; j++){//dosyag potyg stanzii?
-				     if(i==indexSt_T[j]){
+				     if(i==indexSt_T[j]){//49 elementiv,  index Station_Tuda 0,18,34,43 / index Station_Nazad 0,9,25, 43 
 				     praporSt_T=1; 
 				     
 				     //vigruzka/zagruzka pasagiriv z/v potyaga	
@@ -395,11 +408,20 @@ void vipuskNaLiniuM (Potyag [] mP){
 	}  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N 
 	    if((0!=line_T [line_T.length-1]) &&
 	   	   (0==line_N[0])) {
-	   	    //zbilshuu dosvid mashinista max=9000 poizdok (5r x 11 mis x 20 dib x 8 poizdok)
+	   	    //zbilshuu dosvid mashinista max=10000 poizdok (5r x 11 mis x 22 dib x 8 poizdok)
 	    	for(Potyag p: potyagNaLinii){
 	    		if (line_T [line_T.length-1]==p.getNomerPotyga()){
-	    			if (p.getMashinist().getDosvid()<9000) 
-	    				p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+	    			if (p.getMashinist().getDosvid() < 10000)  p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+	    			//stvoruu klas poizdka ta dodau v arraylist poizdki
+	    	    	   Poizdka fakt2 =  new Poizdka (p.getMashinist(), this.nazvaLinii+"_T");
+	    	    	   MetroRuch.poizdki.add(fakt2);
+	    	    	 //zamina mashinistiv
+	 	    	    	MetroRuch.driversBlueTMP.add(p.getMashinist());
+	 	    	    	if (MetroRuch.driversBlueTMP.size() >= MetroRuch.driversBlue.size()) {
+	 	    	    		MetroRuch.driversBlue.addAll(MetroRuch.driversBlueTMP);
+	 	    	    		MetroRuch.driversBlueTMP.clear();	    
+	 	    	    	}
+	 	    	    	if (!MetroRuch.driversBlue.isEmpty()) p.setMashinist(MetroRuch.driversBlue.poll());
 	    		break;
 	    		}}
 	    	line_N[0]=line_T [line_T.length-1];
@@ -414,7 +436,7 @@ void vipuskNaLiniuM (Potyag [] mP){
 					tmp4++;
 					}			
 				for (int j=0; j<indexSt_N.length; j++){//dosyag potyg stanzii?
-				     if(i==indexSt_N[j]){
+				     if(i==indexSt_N[j]){//49 elementiv,  index Station_Tuda 0,18,34,43 / index Station_Nazad 0,9,25, 43
 				     praporSt_N=1; 
 				       
 				   //vigruzka/zagruzka pasagiriv z/v potyaga	
@@ -441,11 +463,20 @@ void vipuskNaLiniuM (Potyag [] mP){
 	  //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
 	    if((0!=line_N [line_N.length-1]) &&
 	   	   (0==line_T[0])) {
-	    	//zbilshuu dosvid mashinista max=9000 poizdok (5r x 11 mis x 20 dib x 8 poizdok)
+	    	//zbilshuu dosvid mashinista max=10000 poizdok (5r x 11 mis x 22 dib x 8 poizdok)
 	    	for(Potyag p: potyagNaLinii){
 	    		if (line_N [line_N.length-1]==p.getNomerPotyga()){
-	    			if (p.getMashinist().getDosvid()<9000) 
-	    				p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+	    			if (p.getMashinist().getDosvid()<10000)  p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+	    			//stvoruu klas poizdka ta dodau v arraylist poizdki
+	    	    	   Poizdka fakt2 =  new Poizdka (p.getMashinist(), this.nazvaLinii+"_N");
+	    	    	   MetroRuch.poizdki.add(fakt2);
+	    	    	   //zamina mashinistiv
+	 	    	    	MetroRuch.driversBlueTMP.add(p.getMashinist());
+	 	    	    	if (MetroRuch.driversBlueTMP.size() >= MetroRuch.driversBlue.size()) {
+	 	    	    		MetroRuch.driversBlue.addAll(MetroRuch.driversBlueTMP);
+	 	    	    		MetroRuch.driversBlueTMP.clear();	    
+	 	    	    	}
+	 	    	    	if (!MetroRuch.driversBlue.isEmpty()) p.setMashinist(MetroRuch.driversBlue.poll());
 	    		break;
 	    		}}
 	    	line_T[0]=line_N [line_N.length-1];

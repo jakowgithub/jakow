@@ -41,7 +41,7 @@ public class Pasagir implements Serializable {
 	}
 
 	@Override
-	public String toString() {return "Pasagir [pIB=" + pIB + "]";}
+	public String toString() {return "Pasagir [pIB" + pIB + "]";}
 	
 	public int getIdPasagir() {return idPasagir;}
 	public void setIdPasagir(int idPasagir) {this.idPasagir = idPasagir;}

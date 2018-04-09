@@ -55,6 +55,7 @@ for (int i=0; i<3; i++){
     buttonStation [i][j]=new JButton("S"+((i+1)*10+(j+1)));
     buttonStation [i][j].setFont(kursiv);
     buttonStation [i][j].setBorder(ramkaGovta3);
+    buttonStation [i][j].addActionListener((ae)->{});
 }}
 for (int i=0; i<120; i++){buttonRedLine1 [i]=new JButton(); buttonRedLine1 [i].setFont(k8);} 
 for (int i=0; i<98; i++){buttonBlueLine2 [i]=new JButton(); buttonBlueLine2 [i].setFont(k8);}
@@ -276,7 +277,6 @@ static void deleteBlueLine2_N (int x){
 }
 
 public static void main (String[] args) {
-		SchemaMetro sM = new SchemaMetro(); 
-			 
+		SchemaMetro sM = new SchemaMetro(); 			 
 }}
 

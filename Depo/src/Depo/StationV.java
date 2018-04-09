@@ -2,20 +2,21 @@ package Depo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StationV implements Runnable {
-	private List <Pasagir> pasagiriVestibul = new ArrayList<> ();
-	private List <Pasagir> pasagiriPeron = new ArrayList<> ();
+	private CopyOnWriteArrayList <Pasagir> pasagiriVestibul = new CopyOnWriteArrayList <>();
+	private CopyOnWriteArrayList <Pasagir> pasagiriPeron = new CopyOnWriteArrayList<> ();
 	private List <Potyag> potyagi = new ArrayList<> ();
-	private int kilkistPasagiriv = 100;//8800
+	private int kilkistPasagiriv = 8800;//8800
 	private int praporKinezGeneraziiPasagiriv = 0;
 	private String nazvaStation;
 	
 	public List<Pasagir> getPasagiriVestibul() {return pasagiriVestibul;}
-	public void setPasagiriVestibul(List<Pasagir> pasagiriVestibul) {this.pasagiriVestibul = pasagiriVestibul;}
+	//public void setPasagiriVestibul(List<Pasagir> pasagiriVestibul) {this.pasagiriVestibul = pasagiriVestibul;}
 	
 	public List<Pasagir> getPasagiriPeron() {return pasagiriPeron;}
-	public void setPasagiriPeron(List<Pasagir> pasagiriPeron) {this.pasagiriPeron = pasagiriPeron;}
+	//public void setPasagiriPeron(List<Pasagir> pasagiriPeron) {this.pasagiriPeron = pasagiriPeron;}
 
 	public List<Potyag> getPotyagi() {return potyagi;}
 	public void setPotyagi(List<Potyag> potyagi) {this.potyagi = potyagi;}

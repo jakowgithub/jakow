@@ -1,38 +1,23 @@
 package Depo;
 
-import java.io.IOException;
+import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.net.URL;
 import java.sql.SQLException;
-import java.sql.*;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import com.j256.ormlite.*;
 import com.j256.ormlite.dao.CloseableIterator;
-import com.j256.ormlite.dao.*;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.jdbc.*;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.*;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.support.DatabaseResults;
-import com.j256.ormlite.support.*;
-import com.j256.ormlite.table.DatabaseTable.*;
-import com.j256.ormlite.table.TableUtils.*;
-import com.j256.ormlite.table.*;
-import com.j256.ormlite.support.DatabaseConnection.*;
-import com.j256.ormlite.table.DatabaseTableConfig.*;
-
-import java.io.File;
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+import com.j256.ormlite.table.DatabaseTableConfig;
+import com.j256.ormlite.table.TableUtils;
 
 public class ReflectDAO {
 

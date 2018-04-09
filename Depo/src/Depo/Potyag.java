@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -199,7 +200,7 @@ void vxidPasagiriv5Potokov (List <Pasagir> pasagiri){
 			new Thread (()-> {try { 
 					int pochatok = (d15*j-1)==-1? 0 : (d15*j-1);
 					int kinez = d15*(j+1)-1;
-					List <Pasagir> pasagiriTMP = new ArrayList<Pasagir>(pasagiri.subList(pochatok, kinez));
+					CopyOnWriteArrayList <Pasagir> pasagiriTMP = new CopyOnWriteArrayList <Pasagir> (pasagiri.subList(pochatok, kinez));
 					//dodau ostanjogo pasagira (subList ne mistit pasagiriTMP[kinez])
 					if (j==4) pasagiriTMP.add(pasagiri.get(pasagiri.size()-1));	
 						
@@ -224,26 +225,26 @@ void vxidPv5Potokov (StationV station, List <Pasagir> pasagiri){
 		Thread potokVxid5 = new Thread (()-> {	
 		synchronized (station.getPasagiriPeron()) {
 		//List <Pasagir> pasagiriTMP = new ArrayList<Pasagir>();		
-		List <Pasagir> pasagiriZajchli = new ArrayList<Pasagir>();
+		CopyOnWriteArrayList <Pasagir> pasagiriZajchli = new CopyOnWriteArrayList<Pasagir>();
 		List <Thread> potokiVagon = new ArrayList<> ();
 		int d15 = (int)(pasagiri.size()/5);
 		//int zalichok = (pasagiri.size()%5);
 		
 		for (int i=0; i<5; i++) {
 			final Vagon vagon = this.potyag.get(i);		
-			final  List <Pasagir> pasagiriVagonTMP;
+			final  CopyOnWriteArrayList <Pasagir> pasagiriVagonTMP;
 			
 			if (!pasagiri.isEmpty()) {
 				if(0!=d15) {
 			      int pochatok = (d15*i-1) ==-1? 0 : (d15*i-1);
 			      int kinez = (d15*(i+1)-1) ==-1? 0: (d15*(i+1)-1);	
 			      System.out.println("i="+i+" pasagiri.size()="+pasagiri.size()+" d15="+ d15 + " pochatok=" + pochatok + " kinez=" + kinez);
-			      pasagiriVagonTMP = new ArrayList<Pasagir>(pasagiri.subList(pochatok, kinez));	   
+			      pasagiriVagonTMP = new CopyOnWriteArrayList<Pasagir>(pasagiri.subList(pochatok, kinez));	   
 			//dodau ostanjogo pasagira (subList ne mistit pasagiriTMP[kinez]) ta zalichok.
 			   if (4==i)  for(int k = kinez; k<pasagiri.size(); k++) {pasagiriVagonTMP.add (pasagiri.get(k));}
 				} else {
 					i=5; //vixid z ziklu
-					pasagiriVagonTMP = new ArrayList<>();
+					pasagiriVagonTMP = new CopyOnWriteArrayList<>();
 				    pasagiriVagonTMP.addAll(pasagiri);    
 				}
 				Thread potokVagon=new Thread (()-> {try { 
@@ -280,7 +281,7 @@ void vixidV5Potokov (){
 		
 		Thread potokVixid5=new Thread (()-> {
 	    List <Thread> potokiVixid = new ArrayList<> ();
-	    List <Pasagir> pasagiriTMP = new ArrayList<>();
+	    CopyOnWriteArrayList <Pasagir> pasagiriTMP = new CopyOnWriteArrayList<>();
 		for (int i=0; i<5; i++) {
 			final Vagon vagon = this.potyag.get(i);	
 			

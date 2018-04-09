@@ -1,7 +1,8 @@
 package Depo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class MetroRuch {
 SchemaMetro schemaMetro;
@@ -10,14 +11,26 @@ MetroRuch (SchemaMetro schemaMetro) {this.schemaMetro = schemaMetro;}
 static List <StationV> stationsRed = new ArrayList<>();
 static List <StationV> stationsBlue = new ArrayList<>();
 static List <Thread> potoki = new ArrayList<> ();
+static CopyOnWriteArrayList <Poizdka> poizdki = new CopyOnWriteArrayList<>();//date,time,line,mashinist
 static Vixid vixid;
-
 
 public Line [] getlines(){return lines;}
 public Vixid getVixid(){return vixid;}
 public static List<StationV> getStationsRed() {return stationsRed;}
 public static List<StationV> getStationsBlue() {return stationsBlue;}
 public static List <Thread> getPotoki () {return potoki;}
+
+public static Comparator <Mashinist> comparatorMashinist = new Comparator <Mashinist>(){ 
+	@Override
+	public int compare (Mashinist m1, Mashinist m2) {
+	if (m1.getDosvid() > m2.getDosvid()) return -1;
+	if (m1.getDosvid() < m2.getDosvid()) return 1;
+	return 0;
+	}};
+public static PriorityBlockingQueue <Mashinist>  driversRed = new PriorityBlockingQueue <>(100, comparatorMashinist);
+public static PriorityBlockingQueue <Mashinist>  driversRedTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
+public static PriorityBlockingQueue <Mashinist>  driversBlue = new PriorityBlockingQueue <>(100, comparatorMashinist);
+public static PriorityBlockingQueue <Mashinist>  driversBlueTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
 
 Line[] metroRuch(){
 	Depo depo1=new Depo (18,12, NazvaDepo.DepoDarniza);
@@ -45,7 +58,11 @@ Line[] metroRuch(){
 	 depo1.dodatVdepo(potyag7);
 	 Potyag potyag8= new Potyag(depo1);potyag8.setMashinist(new Mashinist("Golovatenko", "1230456789"));
 	 depo1.dodatVdepo(potyag8);
-	 
+	 //stvoruu kimnatu ochikuvannya mashinistov RED Line
+	 for (int i=0; i<8; i++){
+		 Mashinist m = new Mashinist("PibRedWait_"+i, "123456789"+i, i);
+		 driversRed.add(m);
+	 }
 	 Vixid vixid = new Vixid();
 	 
 	 Line redLine1=new Line(1);
@@ -56,18 +73,23 @@ Line[] metroRuch(){
 			//generaziya pasagiriv, zapusk 3-x eskalatorov
 			zapuskGeneraziiPasagirivTa3Eskalatora (station);
 		 }		 
-	 redLine1.vipuskNaLiniu(potyag1, potyag2, potyag3, potyag4, 
-             potyag5, potyag6, potyag7, potyag8 );
+	 redLine1.vipuskNaLiniu(potyag1, potyag2, potyag3, potyag4, potyag5, potyag6, potyag7, potyag8 );
      depo1.getDepo().removeAll(redLine1.getPotyagNaLinii());
      lines[0]=redLine1;
-//WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW	 
+     
+//=========================================================================
 	 Potyag [] potyagiBL2=new Potyag[8];
 	 Depo depo2=new Depo (27,18, NazvaDepo.DepoGeroivDnipra);
 	 for (int i=0; i<8; i++){
 		 potyagiBL2[i] = new Potyag(depo2);
-		 potyagiBL2[i].setMashinist(new Mashinist("PIB "+i, "123456789"+i));
+		 potyagiBL2[i].setMashinist(new Mashinist("PIB_"+i, "123456789"+i));
 		 depo2.dodatVdepo(potyagiBL2[i]);
 	 }
+	//stvoruu kimnatu ochikuvannya mashinistov Blue Line
+		 for (int i=0; i<8; i++){
+			 Mashinist m = new Mashinist("PibBlueWait_"+i, "123456789"+i, i);
+			 driversBlue.add(m);
+		 }
 	 Line blueLine2=new Line(2);
 	//stvoruu 4 station, kogna z 3 eskalatorami
 		 for (int i=1; i<=VidstanMigSt2.values().length; i++) {
@@ -82,7 +104,9 @@ Line[] metroRuch(){
 	 
 	 return lines;
 }
-void metroStop (Line[] ln) {for(Line line: ln){if (null!=line) line.getTimer().cancel();}}
+void metroStop (Line[] ln) {
+	for(Line line: ln) {if (null!=line) line.getTimer().cancel();}
+	}
 
 void zapuskGeneraziiPasagirivTa3Eskalatora (StationV st) {
 	Thread potokGeneraziyaPasagiriv = new Thread(st);
