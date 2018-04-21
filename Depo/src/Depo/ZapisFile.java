@@ -13,7 +13,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class ZapisFile {
 
 	//metod zapisue v koren proeta file "Poizdka.txt" 
-	//(abo  "simpleName clasu T.txt") 
+	//(abo  "getClass().getSimpleName().txt") 
 	public static <T> void saveFile (CopyOnWriteArrayList<T> poizdki){
 		if (!poizdki.isEmpty()) {
 		//File fileTelefon=new File (System.getProperty("java.class.path"));
@@ -47,9 +47,11 @@ public class ZapisFile {
 		   } 
 		   }}}
 	
-	//metod zapisue v koren proeta file "Mashinist.txt" (abo  "simpleName clasu T.txt") 
-	// rangirovanie ne garantovane (vikoristivuu peek)
-	public static <T> void saveFile (PriorityBlockingQueue <T> drivers){
+//metod zapisue v koren proeta file "Mashinist.txt" (abo  "simpleName clasu T.txt") 
+//int peek = 1,2,4,5,.. - rangirovanie ne garantovane (vikoristovuu iterator), 
+//int peek =3-rangirovanie garantovane (vikoristivuu pool).
+	public static <T> void saveFileDriver (PriorityBlockingQueue <T> drivers, int peek){
+		
 		if (!drivers.isEmpty()) {
 			//File fileTelefon=new File (System.getProperty("java.class.path"));
 		File file=new File (System.getProperty("user.dir"));
@@ -71,13 +73,19 @@ public class ZapisFile {
 			      }catch (IOException ioe){ ioe.printStackTrace();System.out.println("Pomilka stvorennya");}
 			 }
 		if(Files.isWritable(pathNew)) {
-		    int i=1;
-			for (T driver: drivers){
+			int i=1;
+			if (3==peek) {
+				while (!drivers.isEmpty()) {
+				try { Files.write(pathNew, (drivers.poll().toString()+"N" + i).getBytes(), StandardOpenOption.APPEND); 
+		              Files.write(pathNew, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
+		              i++;
+		        }catch (IOException e){ e.printStackTrace();System.out.println("Pomilka Zapisu");}
+				}}
+			else {for (T driver: drivers){
 				  try { Files.write(pathNew, (driver.toString()+"N" + i).getBytes(), StandardOpenOption.APPEND); 
 					    Files.write(pathNew, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
 					    i++;
 					   }catch (IOException e){ e.printStackTrace();System.out.println("Pomilka Zapisu");}
-			   } 
+			   }}
 			   }}}
-	
 }

@@ -220,7 +220,6 @@ try {connectionSource = new JdbcConnectionSource(databaseURL);
  //Dodau potyag v depo
  depo1.dodatVdepo(potyag4);
  //stvoruu pasagiriv
-	/**
  List <Pasagir> pasList = new ArrayList<Pasagir> ();
  for (int i=0; i<1100; i++){
  Pasagir pas = new Pasagir ("PIB "+i, "IPN "+i, RandomDosvid.randomDosvid());
@@ -228,7 +227,6 @@ try {connectionSource = new JdbcConnectionSource(databaseURL);
  }				 
  //stvoruu tablizu pasagiriv
  pasList.forEach(pas -> zapisDAO(daos, pas));
-		*/
  //stvoruu tablizu potyagiv
  zapisDAO(daos, potyag1);
  zapisDAO(daos, potyag2);

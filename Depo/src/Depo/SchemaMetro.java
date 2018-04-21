@@ -275,6 +275,108 @@ static void deleteBlueLine2_N (int x){
 	resetRamkaGovta(curX, buttonBlueLine2);
 	buttonBlueLine2[curX].setText("");
 }
+//metod vidobragae ruch potyagiv GreenLine3_T 
+static void printGreenLine3_T (int x, int nomerPotyaga){
+    
+	int curX=83-(2*x);
+	
+    if (curX<59)  {  curX=87-(2*x); 
+    
+	if (61==curX) curX=59;
+	if (21==curX) curX=22;
+	if (19==curX) curX=20;
+	if (17==curX) curX=19;
+	if (15==curX) curX=17;
+	if (13==curX) curX=14;
+	
+	    if (curX<13)  { curX=91-(2*x);
+	
+	       if (15==curX) curX=14;
+	       if (13==curX) curX=14;
+	       if ( 1==curX) curX=0;
+	       if (-1==curX) curX=1;
+	       if (-3==curX) curX=2;
+	       if (-5==curX) curX=4;
+	       if (-7==curX) curX=6;
+    }}
+	setRamkaGovta(curX, buttonGreenLine3);
+	buttonGreenLine3[curX].setText(""+nomerPotyaga);
+}
+static void deleteGreenLine3_T (int x){
+
+int curX=83-(2*x);
+	
+    if (curX<59)  {  curX=87-(2*x); 
+    
+	if (61==curX) curX=59;
+	if (21==curX) curX=22;
+	if (19==curX) curX=20;
+	if (17==curX) curX=19;
+	if (15==curX) curX=17;
+	if (13==curX) curX=14;
+	
+	if (curX<13)  { curX=91-(2*x);
+	
+	if (15==curX) curX=14;
+	if (13==curX) curX=14;
+	if ( 1==curX) curX=0;
+	if (-1==curX) curX=1;
+	if (-3==curX) curX=2;
+	if (-5==curX) curX=4;
+	if (-7==curX) curX=6;
+    }}
+    resetRamkaGovta(curX, buttonGreenLine3);
+	buttonGreenLine3[curX].setText("");	
+}
+//metod vidobragae ruch potyagiv GreenLine3_N 
+static void printGreenLine3_N (int x, int nomerPotyaga){
+	
+	int curX=8+(2*x);
+	if (14==curX) curX=13;
+	if (16==curX) curX=15;
+	
+	if (curX>16) { curX=4+(2*x);
+	
+	   if (14==curX) curX=15;
+	   if (20==curX) curX=21;
+	   if (22==curX) curX=21;
+	   
+	        if (curX>60) { curX=2*x;
+	        
+	           if (58==curX) curX=60;
+	           if (90==curX) curX=91;
+	           if (92==curX) curX=90;
+	           if (94==curX) curX=89;
+	           if (96==curX) curX=87;
+	           if (98==curX) curX=85;
+	}}
+	setRamkaGovta(curX, buttonGreenLine3);
+	buttonGreenLine3[curX].setText(""+nomerPotyaga);
+}
+static void deleteGreenLine3_N (int x){
+	
+	int curX=8+(2*x);
+	if (14==curX) curX=13;
+	if (16==curX) curX=15;
+	
+	if (curX>16) { curX=4+(2*x);
+	
+	   if (14==curX) curX=15;
+	   if (20==curX) curX=21;
+	   if (22==curX) curX=21;
+	   
+	        if (curX>60) { curX=2*x;
+	        
+	           if (58==curX) curX=60;
+	           if (90==curX) curX=91;
+	           if (92==curX) curX=90;
+	           if (94==curX) curX=89;
+	           if (96==curX) curX=87;
+	           if (98==curX) curX=85;
+	 }}
+	resetRamkaGovta(curX, buttonGreenLine3);
+	buttonGreenLine3[curX].setText("");
+}
 
 public static void main (String[] args) {
 		SchemaMetro sM = new SchemaMetro(); 			 

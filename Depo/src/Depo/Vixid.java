@@ -20,7 +20,9 @@ public class Vixid {
 	    		try {potok.join();
 	    		    } catch (InterruptedException ie) {ie.printStackTrace();}});
 	    	Thread.sleep(700);
-	    	while (!pasagiriVixid.isEmpty()) {System.out.println("pasagiriVixid " + pasagiriVixid.poll().getPIB());}
+	    	int i=1;
+	    	while (!pasagiriVixid.isEmpty()) {System.out.println("pasagiriVixid " + pasagiriVixid.poll().getPIB()+ " N"+ i); i++;}
+	    	//ZapisFile.saveFileDriver(pasagiriVixid, 3);
 		   } catch (InterruptedException ie) {ie.printStackTrace();} 
 	}
 }

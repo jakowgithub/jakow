@@ -10,12 +10,11 @@ Line[] lines =new Line[3];
 MetroRuch (SchemaMetro schemaMetro) {this.schemaMetro = schemaMetro;}
 static List <StationV> stationsRed = new ArrayList<>();
 static List <StationV> stationsBlue = new ArrayList<>();
+static List <StationV> stationsGreen = new ArrayList<>();
 static List <Thread> potoki = new ArrayList<> ();
 static CopyOnWriteArrayList <Poizdka> poizdki = new CopyOnWriteArrayList<>();//date,time,line,mashinist
-static Vixid vixid;
 
 public Line [] getlines(){return lines;}
-public Vixid getVixid(){return vixid;}
 public static List<StationV> getStationsRed() {return stationsRed;}
 public static List<StationV> getStationsBlue() {return stationsBlue;}
 public static List <Thread> getPotoki () {return potoki;}
@@ -31,6 +30,8 @@ public static PriorityBlockingQueue <Mashinist>  driversRed = new PriorityBlocki
 public static PriorityBlockingQueue <Mashinist>  driversRedTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
 public static PriorityBlockingQueue <Mashinist>  driversBlue = new PriorityBlockingQueue <>(100, comparatorMashinist);
 public static PriorityBlockingQueue <Mashinist>  driversBlueTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
+public static PriorityBlockingQueue <Mashinist>  driversGreen = new PriorityBlockingQueue <>(100, comparatorMashinist);
+public static PriorityBlockingQueue <Mashinist>  driversGreenTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
 
 Line[] metroRuch(){
 	Depo depo1=new Depo (18,12, NazvaDepo.DepoDarniza);
@@ -63,7 +64,6 @@ Line[] metroRuch(){
 		 Mashinist m = new Mashinist("PibRedWait_"+i, "123456789"+i, i);
 		 driversRed.add(m);
 	 }
-	 Vixid vixid = new Vixid();
 	 
 	 Line redLine1=new Line(1);
 	 //stvoruu 4 station, kogna z 3 eskalatorami
@@ -75,14 +75,13 @@ Line[] metroRuch(){
 		 }		 
 	 redLine1.vipuskNaLiniu(potyag1, potyag2, potyag3, potyag4, potyag5, potyag6, potyag7, potyag8 );
      depo1.getDepo().removeAll(redLine1.getPotyagNaLinii());
-     lines[0]=redLine1;
-     
+     lines[0]=redLine1;    
 //=========================================================================
 	 Potyag [] potyagiBL2=new Potyag[8];
 	 Depo depo2=new Depo (27,18, NazvaDepo.DepoGeroivDnipra);
 	 for (int i=0; i<8; i++){
 		 potyagiBL2[i] = new Potyag(depo2);
-		 potyagiBL2[i].setMashinist(new Mashinist("PIB_"+i, "123456789"+i));
+		 potyagiBL2[i].setMashinist(new Mashinist("PIB_Blue"+i, "123456789"+i));
 		 depo2.dodatVdepo(potyagiBL2[i]);
 	 }
 	//stvoruu kimnatu ochikuvannya mashinistov Blue Line
@@ -102,10 +101,35 @@ Line[] metroRuch(){
 	 depo2.getDepo().removeAll(blueLine2.getPotyagNaLinii());
 	 lines[1]=blueLine2;
 	 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 Potyag [] potyagiGL3=new Potyag[8];
+	 Depo depo3=new Depo (27,18, NazvaDepo.DepoSirez);// stvoruu depo 27 pasVagoniv ta 18 MashinistVagoniv
+	 for (int i=0; i<8; i++){
+		 potyagiGL3[i] = new Potyag(depo3);//stvoruu potyag z vagoniv depo 
+		 potyagiGL3[i].setMashinist(new Mashinist("PIB_Green"+i, "123456789"+i));//priznachau vashinista
+		 depo3.dodatVdepo(potyagiGL3[i]); //dlya pravilnoj numerazii potyagiv
+	 }
+	//stvoruu kimnatu ochikuvannya mashinistov Green Line
+		 for (int i=0; i<8; i++){
+			 Mashinist m = new Mashinist("PibGreenWait_"+i, "123456789"+i, i);
+			 driversGreen.add(m);
+		 }
+	 Line greenLine3=new Line(3);
+	//stvoruu 4 station, kogna z 3 eskalatorami
+		 for (int i=1; i<=VidstanMigSt3.values().length; i++) {
+				StationV station = new StationV (greenLine3.getNazvaLinii()+"_Station_3"+i);
+				stationsGreen.add(station);
+				//generaziya pasagiriv, zapusk 3-x eskalatorov
+				zapuskGeneraziiPasagirivTa3Eskalatora (station);
+			 }	
+	greenLine3.vipuskNaLiniuGreen(potyagiGL3);
+	depo3.getDepo().removeAll(greenLine3.getPotyagNaLinii());
+	lines[2]=greenLine3;	 
+	 
 	 return lines;
 }
 void metroStop (Line[] ln) {
-	for(Line line: ln) {if (null!=line) line.getTimer().cancel();}
+	if (ln.length > 0) {for(Line line: ln) {if (null!=line) line.getTimer().cancel();}}
 	}
 
 void zapuskGeneraziiPasagirivTa3Eskalatora (StationV st) {
