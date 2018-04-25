@@ -580,8 +580,8 @@ void vipuskNaLiniuM (Potyag [] mP){
 						// yaka Station?
 					     StationV station = MetroRuch.stationsGreen.get(j);
 						 synchronized (station.getPasagiriPeron()) {
-						 if (!potyagNaLinii.get(tmp5).getVsixPasagirivPotyaga().isEmpty()) potyagNaLinii.get(tmp5).vixidV5Potokov();
-						 if (!station.getPasagiriPeron().isEmpty()) potyagNaLinii.get(tmp5).vxidPv5Potokov(station, station.getPasagiriPeron());
+						 if (!potyagNaLinii.get(tmp5).getVsixPasagirivPotyaga().isEmpty())   potyagNaLinii.get(tmp5).vixidV5Potokov();
+						 if (!station.getPasagiriPeron().isEmpty())   potyagNaLinii.get(tmp5).vxidPv5Potokov(station, station.getPasagiriPeron());
 						 }
 						 potyagNaLinii.get(tmp5).setLichilnikSt(potyagNaLinii.get(tmp5).getLichilnikSt()+1);
 						 break;
