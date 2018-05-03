@@ -13,11 +13,8 @@ public class StationV implements Runnable {
 	private String nazvaStation;
 	
 	public List<Pasagir> getPasagiriVestibul() {return pasagiriVestibul;}
-	//public void setPasagiriVestibul(List<Pasagir> pasagiriVestibul) {this.pasagiriVestibul = pasagiriVestibul;}
-	
 	public List<Pasagir> getPasagiriPeron() {return pasagiriPeron;}
-	//public void setPasagiriPeron(List<Pasagir> pasagiriPeron) {this.pasagiriPeron = pasagiriPeron;}
-
+	
 	public List<Potyag> getPotyagi() {return potyagi;}
 	public void setPotyagi(List<Potyag> potyagi) {this.potyagi = potyagi;}
 
@@ -26,7 +23,10 @@ public class StationV implements Runnable {
 
 	public String getNazvaStation() {return nazvaStation;}
 	public void setNazvaStation(String nazvaStation) {this.nazvaStation = nazvaStation;}
-
+	
+	public int getKilkistPasagirivVestibul () {return pasagiriVestibul.size();}
+	public int getKilkistPasagiriPeron () {return pasagiriPeron.size();}
+	
 	public StationV (String nazvaSt) {this.nazvaStation = nazvaSt;} 
 	
 	public void run() {

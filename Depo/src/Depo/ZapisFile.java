@@ -48,8 +48,8 @@ public class ZapisFile {
 		   }}}
 	
 //metod zapisue v koren proeta file "Mashinist.txt" (abo  "simpleName clasu T.txt") 
-//int peek = 1,2,4,5,.. - rangirovanie ne garantovane (vikoristovuu iterator), 
-//int peek =3-rangirovanie garantovane (vikoristivuu pool).
+//peek = 1,2,4,5,.. - rangirovanie ne garantovane (vikoristovuu iterator), 
+//peek =3-rangirovanie garantovane (vikoristivuu pool).
 	public static <T> void saveFileDriver (PriorityBlockingQueue <T> drivers, int peek){
 		
 		if (!drivers.isEmpty()) {

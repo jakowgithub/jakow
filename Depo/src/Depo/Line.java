@@ -29,7 +29,7 @@ public class Line {
 	private int []indexSt_T;//index Stanzij v masive elementov tuda
 	private int []indexSt_N;//index Stanzij v masive elementov nazad
 	private Timer timer;
-	SchemaMetro schemaMetro;
+	//SchemaMetro schemaMetro;
 	
 	ArrayList <Potyag> getPotyagNaLinii (){return potyagNaLinii;}
 	String getNazvaLinii (){return nazvaLinii;}
@@ -684,4 +684,3 @@ void vipuskNaLiniuM (Potyag [] mP){
 		}
 		}}
 }
-//Arrays.sort(zPlata);

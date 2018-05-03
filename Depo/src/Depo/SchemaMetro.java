@@ -2,7 +2,6 @@ package Depo;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.Border;
-import java.awt.event.*;
 
 public class SchemaMetro {
 // ogoloshuu vsi komponenti
@@ -23,9 +22,10 @@ public class SchemaMetro {
 	static private JButton buttonRedLine1 []=new JButton [120];
 	static private JButton buttonBlueLine2 []=new JButton [98];
 	static private JButton buttonGreenLine3 []=new JButton [100];
-    private JButton buttonStart=new JButton("Start");
-    private JButton buttonStop=new JButton("Stop");
-    private JButton buttonWest []=new JButton [22];
+           private JButton buttonStart=new JButton("Start");
+           private JButton buttonStop=new JButton("Stop");
+           private JButton buttonWest []=new JButton [22];
+           
     static Font kursiv=new Font ("TimesRoman", Font.BOLD, 8);
     static Font k8=new Font ("TimesRoman", Font.ITALIC, 8);
     static Border ramkaGovta1 = BorderFactory.createLineBorder(Color.YELLOW, 1);
@@ -36,20 +36,31 @@ panelZentr.setLayout(new GridLayout (50,60));
 panelPivnich.add(lablePivnich);
 panelPivden.add(lablePivden);
 panelEast.add(lableEast);
-int b=0, r=0, g=0, bRL1=0, bBL2=0, bGL3=0;
+int b=0, r=0, g=0, bRL1=0, bBL2=0, bGL3=0, kIS=0;
 
-MetroRuch mr = new MetroRuch(this);
+MetroRuch mr = new MetroRuch (this);
 
 panelWest.setLayout(new GridLayout (24,1));
 panelWest.add(buttonStart); 
 buttonStart.addActionListener((ae)->{mr.lines = mr.metroRuch();}); 
 panelWest.add(buttonStop); //buttonStop.setFont(kursiv);
 buttonStop.addActionListener((ae)->{mr.metroStop(mr.getlines());}); 
-for(int i=0; i<22; i++){
-	buttonWest[i]=new JButton("S "+(i+1)*6);//buttonWest[i].setFont(kursiv);
+for(int i=0; i<10; i++){
+	buttonWest[i]=new JButton("S "+(i+1)*10);//buttonWest[i].setFont(kursiv);
 	panelWest.add(buttonWest[i]);
 	buttonWest[i].addActionListener((ae)->{});
 	}
+for(int i=0; i<12; i++){
+	if (i<4) buttonWest[i]=new JButton("Station"+(11+i));
+	   else if (i<8) buttonWest[i]=new JButton("Station"+(17+i));
+	        else if (i<12) buttonWest[i]=new JButton("Station"+(23+i));
+	panelWest.add(buttonWest[i]);
+	buttonWest[i].addActionListener((aL)->{});
+	}
+buttonWest[0].addActionListener((aL)->{
+	mr.formaIS();
+	mr.showAllStation();
+	});
 for (int i=0; i<3; i++){
     for (int j=0; j<4;j++){ 
     buttonStation [i][j]=new JButton("S"+((i+1)*10+(j+1)));
@@ -379,6 +390,9 @@ static void deleteGreenLine3_N (int x){
 }
 
 public static void main (String[] args) {
-		SchemaMetro sM = new SchemaMetro(); 			 
+		SchemaMetro sM = new SchemaMetro(); 
+		//InfoStation infoStation = new InfoStation();
+
+		
 }}
 
