@@ -1,6 +1,15 @@
 package Depo;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
 public class SchemaMetro {
@@ -36,13 +45,13 @@ panelZentr.setLayout(new GridLayout (50,60));
 panelPivnich.add(lablePivnich);
 panelPivden.add(lablePivden);
 panelEast.add(lableEast);
-int b=0, r=0, g=0, bRL1=0, bBL2=0, bGL3=0, kIS=0;
+int b=0, r=0, g=0, bRL1=0, bBL2=0, bGL3=0;
 
 MetroRuch mr = new MetroRuch (this);
 
 panelWest.setLayout(new GridLayout (24,1));
 panelWest.add(buttonStart); 
-buttonStart.addActionListener((ae)->{mr.lines = mr.metroRuch();}); 
+buttonStart.addActionListener((ae)->{mr.lines = mr.metroRuch(); }); 
 panelWest.add(buttonStop); //buttonStop.setFont(kursiv);
 buttonStop.addActionListener((ae)->{mr.metroStop(mr.getlines());}); 
 for(int i=0; i<10; i++){
@@ -58,8 +67,10 @@ for(int i=0; i<12; i++){
 	buttonWest[i].addActionListener((aL)->{});
 	}
 buttonWest[0].addActionListener((aL)->{
+	if (mr.lines[2]!= null) {
 	mr.formaIS();
 	mr.showAllStation();
+	}
 	});
 for (int i=0; i<3; i++){
     for (int j=0; j<4;j++){ 
@@ -390,9 +401,6 @@ static void deleteGreenLine3_N (int x){
 }
 
 public static void main (String[] args) {
-		SchemaMetro sM = new SchemaMetro(); 
-		//InfoStation infoStation = new InfoStation();
-
-		
+		SchemaMetro sM = new SchemaMetro(); 		
 }}
 

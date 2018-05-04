@@ -14,10 +14,11 @@ public class EskalatorV implements Runnable {
 		this.TimeProizdu = timeProizdu;
 		this.station=station;
 	}
-	public CopyOnWriteArrayList <Pasagir> getEskalator() {return pasagiriEskalator;}
-	public void setEskalator(CopyOnWriteArrayList <Pasagir> pas) {this.pasagiriEskalator = pas;}
-	public String getNazvaEskalatora() {return nazvaEskalatora;}
-	public void setNazvaEskalatora(String nazvaEskalatora) {this.nazvaEskalatora = nazvaEskalatora;}
+	CopyOnWriteArrayList <Pasagir> getEskalator() {return pasagiriEskalator;}
+	void setEskalator(CopyOnWriteArrayList <Pasagir> pas) {this.pasagiriEskalator = pas;}
+	String getNazvaEskalatora() {return nazvaEskalatora;}
+	void setNazvaEskalatora(String nazvaEskalatora) {this.nazvaEskalatora = nazvaEskalatora;}
+	int getKilkistPasagirivEskalatora () {return pasagiriEskalator.size();}
 	
 	public void run() {
      int i=1;// Vestibul.kilkistPasagiriv+1
@@ -28,7 +29,6 @@ try{ while (true) {
 	    synchronized (station.getPasagiriVestibul()) {
 	    if (station.getPasagiriVestibul().isEmpty()) station.getPasagiriVestibul().wait();		
 		this.getEskalator().addAllAbsent(station.getPasagiriVestibul());
-	    //pasagiriEskalator.addAll(station.getPasagiriVestibul());		
 		System.out.println(this.nazvaEskalatora+" "+pasagiriEskalator.toString());
 		station.getPasagiriVestibul().removeAll(this.getEskalator());
 		}

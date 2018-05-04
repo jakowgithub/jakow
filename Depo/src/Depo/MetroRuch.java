@@ -1,6 +1,10 @@
 package Depo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -144,15 +148,28 @@ void metroStop (Line[] ln) {
 			if (null!=line) line.getTimer().cancel();
 		}}}
 
-void zapuskGeneraziiPasagirivTa3Eskalatora (StationV st) {
-	Thread potokGeneraziyaPasagiriv = new Thread(st);
+void zapuskGeneraziiPasagirivTa3Eskalatora (StationV station) {
+	
+	Thread potokGeneraziyaPasagiriv = new Thread(station);
 	potokGeneraziyaPasagiriv.start(); potoki.add(potokGeneraziyaPasagiriv);
-	Thread potok1 = new Thread(new EskalatorV ("Esk 1", 200, st));//1400
-	potok1.start(); potoki.add(potok1);
-	Thread potok2 = new Thread(new EskalatorV ("Esk 2", 200, st));//1800
-	potok2.start(); potoki.add(potok2);
-	Thread potok3 = new Thread(new EskalatorV ("Esk 3", 200, st));//1700
-	potok3.start(); potoki.add(potok3);	
+	
+	EskalatorV esk1 = new EskalatorV ("Esk 1", 200, station); //1400
+	Thread potok1 = new Thread(esk1);
+	potok1.start(); 
+	potoki.add(potok1);
+	station.getEskalotori().add(esk1);
+	
+	EskalatorV esk2 = new EskalatorV ("Esk 2", 200, station); //1800
+	Thread potok2 = new Thread(esk2); 
+	potok2.start(); 
+	potoki.add(potok2);
+	station.getEskalotori().add(esk2);
+	
+	EskalatorV esk3 = new EskalatorV ("Esk 3", 200, station); //1700
+	Thread potok3 = new Thread(esk3);
+	potok3.start(); 
+	potoki.add(potok3);	
+	station.getEskalotori().add(esk3);
 }
 
 void formaIS () {
@@ -161,44 +178,74 @@ void formaIS () {
 		praporKilkostiIS=1;
 	}
 }
-
+//metod vidobragae kilkist pasagiriv v rozrizi stanzij 
 void showAllStation () {
 	
-	class InfoRed extends TimerTask {
-		InfoRed(){}
-		public void run() {    
-		int k=0;
-		for (StationV st: stationsRed) {
-			InfoStation.setText(1, k+1, st.getKilkistPasagirivVestibul());
-			k++;
-		    }}}
-
-	class InfoBlue extends TimerTask {
-		InfoBlue(){}
-		public void run() {    
-		int k=0;
-		for (StationV st: stationsBlue) {
-			InfoStation.setText(1, k+5, st.getKilkistPasagirivVestibul());
-			k++;
-		    }}}
-	class InfoGreen extends TimerTask {
-		InfoGreen(){}    
-		public void run() {    
-		int k=0;
-		for (StationV st: stationsGreen) {
-			InfoStation.setText(1, k+9, st.getKilkistPasagirivVestibul());
-			k++;
-		    }}}
-	
-	int firstTime=0;
-    int period=100;
-    Timer timerRed=new Timer("TimerRed");
-    timerRed.schedule(new InfoRed(), firstTime, period);
-    Timer timerBlue=new Timer("TimerBlue");
-    timerBlue.schedule(new InfoBlue(), firstTime, period);
-    Timer timerGreen=new Timer("TimerGreen");
-    timerGreen.schedule(new InfoGreen(), firstTime, period);
-}
+		class SumaVestibulAll extends TimerTask {
+		
+		SumaVestibulAll(){}    
+		
+		int sumaVestibul=0, 
+			sumaEsk1=0, 
+			sumaEsk2=0, 
+			sumaEsk3=0,
+			sumaPeron=0; 
+		
+		public void run() {  
+			
+			for (int i=0; i<4; i++) {
+				
+				int vestibulStRed = stationsRed.get(i).getKilkistPasagirivVestibul();
+				InfoStation.setText(1, i+1, vestibulStRed);
+				int esk1StRed = stationsRed.get(i).getEskalotori().get(0).getKilkistPasagirivEskalatora();
+				InfoStation.setText(2, i+1, esk1StRed);
+				int esk2StRed = stationsRed.get(i).getEskalotori().get(1).getKilkistPasagirivEskalatora();
+				InfoStation.setText(3, i+1, esk2StRed);
+				int esk3StRed = stationsRed.get(i).getEskalotori().get(2).getKilkistPasagirivEskalatora();
+				InfoStation.setText(4, i+1, esk3StRed);	
+				int peronStRed = stationsRed.get(i).getKilkistPasagiriPeron();
+				InfoStation.setText(5, i+1, peronStRed);
+				
+				int vestibulStBlue = stationsBlue.get(i).getKilkistPasagirivVestibul();
+				InfoStation.setText(1, i+5, vestibulStBlue);
+				int esk1StBlue = stationsBlue.get(i).getEskalotori().get(0).getKilkistPasagirivEskalatora();
+				InfoStation.setText(2, i+5, esk1StBlue);
+				int esk2StBlue = stationsBlue.get(i).getEskalotori().get(1).getKilkistPasagirivEskalatora();
+				InfoStation.setText(3, i+5, esk2StBlue);
+				int esk3StBlue = stationsBlue.get(i).getEskalotori().get(2).getKilkistPasagirivEskalatora();
+				InfoStation.setText(4, i+5, esk3StBlue);
+				int peronStBlue = stationsBlue.get(i).getKilkistPasagiriPeron();
+				InfoStation.setText(5, i+5, peronStBlue);
+				
+				int vestibulStGreen = stationsGreen.get(i).getKilkistPasagirivVestibul();
+				InfoStation.setText(1, i+9, vestibulStGreen);
+				int esk1StGreen = stationsBlue.get(i).getEskalotori().get(0).getKilkistPasagirivEskalatora();
+				InfoStation.setText(2, i+9, esk1StGreen);
+				int esk2StGreen = stationsBlue.get(i).getEskalotori().get(1).getKilkistPasagirivEskalatora();
+				InfoStation.setText(3, i+9, esk2StGreen);
+				int esk3StGreen = stationsBlue.get(i).getEskalotori().get(2).getKilkistPasagirivEskalatora();
+				InfoStation.setText(4, i+9, esk3StGreen);
+				int peronStGreen = stationsGreen.get(i).getKilkistPasagiriPeron();
+				InfoStation.setText(5, i+9, peronStGreen);
+				
+				sumaVestibul+=(vestibulStRed+vestibulStBlue+vestibulStGreen);
+				sumaEsk1+=(esk1StRed+esk1StBlue+esk1StGreen);
+				sumaEsk2+=(esk2StRed+esk2StBlue+esk2StGreen);
+				sumaEsk3+=(esk3StRed+esk3StBlue+esk3StGreen);
+				sumaPeron+=(peronStRed+peronStBlue+peronStGreen);
+			}
+			InfoStation.setText (1, 13, sumaVestibul);
+			InfoStation.setText (2, 13, sumaEsk1);
+			InfoStation.setText (3, 13, sumaEsk2);
+			InfoStation.setText (4, 13, sumaEsk3);
+			InfoStation.setText (5, 13, sumaPeron);
+			InfoStation.setText (8, 13, Vixid.pasagiriVixid.size());
+		}}
+	int firstTime=0; 
+	int period=200; 
+    Timer timerSuma=new Timer("TimerSuma");  
+    timerSuma.schedule(new SumaVestibulAll(), firstTime, period);
+	}
 
 void showOneStation (JButton button) {}
 }

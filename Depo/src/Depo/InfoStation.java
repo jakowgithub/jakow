@@ -38,8 +38,8 @@ public class InfoStation {
 		    		    if (3==i) labelInfo [i][j]=new JLabel("Eskal.N2");
 		    		    if (4==i) labelInfo [i][j]=new JLabel("Eskal.N3");
 		    		    if (5==i) labelInfo [i][j]=new JLabel("Peron");
-		    		    if (6==i) labelInfo [i][j]=new JLabel("Tuda");
-		    		    if (7==i) labelInfo [i][j]=new JLabel("Nazad");
+		    		    if (6==i) labelInfo [i][j]=new JLabel("N tuda");
+		    		    if (7==i) labelInfo [i][j]=new JLabel("N nazad");
 		    		    if (8==i) labelInfo [i][j]=new JLabel("Vixid");
 		    	}
 		    	
@@ -65,7 +65,7 @@ public class InfoStation {
 		frame.addWindowListener(new WindowAdapter(){
 				public void windowClosing(WindowEvent e) {
 					MetroRuch.praporKilkostiIS=0;
-				    //System.exit(0);
+				    System.exit(0);
 				    }});
 	}
 public static void setText (int i, int j, int kilkist) {labelInfo[i][j].setText(""+kilkist);}

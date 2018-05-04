@@ -7,25 +7,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class StationV implements Runnable {
 	private CopyOnWriteArrayList <Pasagir> pasagiriVestibul = new CopyOnWriteArrayList <>();
 	private CopyOnWriteArrayList <Pasagir> pasagiriPeron = new CopyOnWriteArrayList<> ();
+	private CopyOnWriteArrayList <EskalatorV> eskalatori = new CopyOnWriteArrayList<> ();
 	private List <Potyag> potyagi = new ArrayList<> ();
 	private int kilkistPasagiriv = 8800;//8800
 	private int praporKinezGeneraziiPasagiriv = 0;
 	private String nazvaStation;
 	
-	public List<Pasagir> getPasagiriVestibul() {return pasagiriVestibul;}
-	public List<Pasagir> getPasagiriPeron() {return pasagiriPeron;}
+	List<Pasagir> getPasagiriVestibul() {return pasagiriVestibul;}
+	List<Pasagir> getPasagiriPeron () {return pasagiriPeron;}
 	
-	public List<Potyag> getPotyagi() {return potyagi;}
-	public void setPotyagi(List<Potyag> potyagi) {this.potyagi = potyagi;}
+	List<Potyag> getPotyagi() {return potyagi;}
+	void setPotyagi(List<Potyag> potyagi) {this.potyagi = potyagi;}
 
-	public int getPraporKinezGeneraziiPasagiriv() {return praporKinezGeneraziiPasagiriv;}
-	public void setPraporKinezGeneraziiPasagiriv(int praporKinezGeneraziiPasagiriv) {this.praporKinezGeneraziiPasagiriv = praporKinezGeneraziiPasagiriv;}
+	int getPraporKinezGeneraziiPasagiriv() {return praporKinezGeneraziiPasagiriv;}
+	void setPraporKinezGeneraziiPasagiriv(int praporKinezGeneraziiPasagiriv) {this.praporKinezGeneraziiPasagiriv = praporKinezGeneraziiPasagiriv;}
 
-	public String getNazvaStation() {return nazvaStation;}
-	public void setNazvaStation(String nazvaStation) {this.nazvaStation = nazvaStation;}
+	String getNazvaStation() {return nazvaStation;}
+	void setNazvaStation(String nazvaStation) {this.nazvaStation = nazvaStation;}
 	
-	public int getKilkistPasagirivVestibul () {return pasagiriVestibul.size();}
-	public int getKilkistPasagiriPeron () {return pasagiriPeron.size();}
+	int getKilkistPasagirivVestibul () {return pasagiriVestibul.size();}
+	int getKilkistPasagiriPeron () {return pasagiriPeron.size();}
+	List<EskalatorV> getEskalotori () {return eskalatori;}
+	void setEskalatori (CopyOnWriteArrayList <EskalatorV> eskalatori) {this.eskalatori=eskalatori;}
 	
 	public StationV (String nazvaSt) {this.nazvaStation = nazvaSt;} 
 	
