@@ -224,11 +224,10 @@ void vxidPv5Potokov (StationV station, List <Pasagir> pasagiri){
 		
 		Thread potokVxid5 = new Thread (()-> {	
 		synchronized (station.getPasagiriPeron()) {
-		//List <Pasagir> pasagiriTMP = new ArrayList<Pasagir>();		
+			
 		CopyOnWriteArrayList <Pasagir> pasagiriZajchli = new CopyOnWriteArrayList<Pasagir>();
 		List <Thread> potokiVagon = new ArrayList<> ();
 		int d15 = (int)(pasagiri.size()/5);
-		//int zalichok = (pasagiri.size()%5);
 		
 		for (int i=0; i<5; i++) {
 			final Vagon vagon = this.potyag.get(i);		
@@ -238,17 +237,19 @@ void vxidPv5Potokov (StationV station, List <Pasagir> pasagiri){
 				if(0!=d15) {
 			      int pochatok = (d15*i-1) ==-1? 0 : (d15*i-1);
 			      int kinez = (d15*(i+1)-1) ==-1? 0: (d15*(i+1)-1);	
-			      System.out.println("i="+i+" pasagiri.size()="+pasagiri.size()+" d15="+ d15 + " pochatok=" + pochatok + " kinez=" + kinez);
 			      pasagiriVagonTMP = new CopyOnWriteArrayList<Pasagir>(pasagiri.subList(pochatok, kinez));	   
 			//dodau ostanjogo pasagira (subList ne mistit pasagiriTMP[kinez]) ta zalichok.
-			   if (4==i)  for(int k = kinez; k<pasagiri.size(); k++) {pasagiriVagonTMP.add (pasagiri.get(k));}
+			      if (4==i)  {
+			    	  for(int k = kinez; k<pasagiri.size(); k++) {
+					  pasagiriVagonTMP.add (pasagiri.get(k));
+					   }}
 				} else {
-					i=5; //vixid z ziklu
+					i=10; //vixid z ziklu
 					pasagiriVagonTMP = new CopyOnWriteArrayList<>();
 				    pasagiriVagonTMP.addAll(pasagiri);    
 				}
 				Thread potokVagon=new Thread (()-> {try { 
-			   for (Pasagir pas: pasagiriVagonTMP) {
+			    for (Pasagir pas: pasagiriVagonTMP) {
 				   synchronized (vagon.getPasigirVagon()) {
 				    if (vagon.setPasigirVagon(pas)) { 
 				    	pasagiriZajchli.add(pas);			    		
@@ -262,13 +263,16 @@ void vxidPv5Potokov (StationV station, List <Pasagir> pasagiri){
 				});
 			potokVagon.start();
 			potokiVagon.add(potokVagon);
-				
 				}
 			
 			else break;
 		}
 		//po zakinchennu 5 potokiv vidalyau z pasagiriPeron pasagiriv yaki zajchli
-		potokiVagon.forEach(potokVagon->{try {potokVagon.join();} catch (InterruptedException ie) {ie.printStackTrace();}});
+		potokiVagon.forEach(potokVagon->{
+			try {
+			potokVagon.join();
+			} catch (InterruptedException ie) {ie.printStackTrace();
+			}});
 		station.getPasagiriPeron().removeAll(pasagiriZajchli);
 				}
 		

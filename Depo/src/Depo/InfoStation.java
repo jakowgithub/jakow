@@ -65,7 +65,7 @@ public class InfoStation {
 		frame.addWindowListener(new WindowAdapter(){
 				public void windowClosing(WindowEvent e) {
 					MetroRuch.praporKilkostiIS=0;
-				    System.exit(0);
+				    //System.exit(0);
 				    }});
 	}
 public static void setText (int i, int j, int kilkist) {labelInfo[i][j].setText(""+kilkist);}
