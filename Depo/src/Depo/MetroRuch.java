@@ -84,7 +84,8 @@ Line[] metroRuch(){
 			zapuskGeneraziiPasagirivTa3Eskalatora (station);
 		 }		 
 	 redLine1.vipuskNaLiniu(potyag1, potyag2, potyag3, potyag4, potyag5, potyag6, potyag7, potyag8 );
-     depo1.getDepo().removeAll(redLine1.getPotyagNaLinii());
+     //vidalyau potygi yaki vijchli na liniu z depo
+	 depo1.getDepo().removeAll(redLine1.getPotyagNaLinii());
      lines[0]=redLine1;    
 //=========================================================================
 	 Potyag [] potyagiBL2=new Potyag[8];
@@ -180,8 +181,8 @@ void formaIS () {
 }
 //metod vidobragae kilkist pasagiriv v rozrizi stanzij 
 void showAllStation () {
-	
-		class SumaVestibulAll extends TimerTask {
+		
+	class SumaVestibulAll extends TimerTask {
 		
 		SumaVestibulAll(){}    
 		
@@ -192,7 +193,7 @@ void showAllStation () {
 			sumaPeron=0; 
 		
 		public void run() {  
-			
+			//perebirau vsi stanzii
 			for (int i=0; i<4; i++) {
 				
 				int vestibulStRed = stationsRed.get(i).getKilkistPasagirivVestibul();
@@ -240,6 +241,48 @@ void showAllStation () {
 			InfoStation.setText (4, 13, sumaEsk3);
 			InfoStation.setText (5, 13, sumaPeron);
 			InfoStation.setText (8, 13, Vixid.pasagiriVixid.size());
+			
+			/**
+			for (Potyag potyag: getlines()[0].getPotyagNaLinii()){
+			
+				if (0==  potyag.getCurentPosition()) InfoStation.setText (6, 1, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 1, " ");
+				if (16== potyag.getCurentPosition()) InfoStation.setText (6, 2, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 2, " ");
+				if (36== potyag.getCurentPosition()) InfoStation.setText (6, 3, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 3, " ");
+				if (54== potyag.getCurentPosition()) InfoStation.setText (6, 4, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 4, " ");
+				if (60== potyag.getCurentPosition()) InfoStation.setText (7, 1, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 1, " ");
+				if (78== potyag.getCurentPosition()) InfoStation.setText (7, 2, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 2, " ");
+				if (98== potyag.getCurentPosition()) InfoStation.setText (7, 3, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 3, " ");
+				if (114==potyag.getCurentPosition()) InfoStation.setText (7, 4, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 4, " ");
+			}
+			
+			
+			getlines()[1].getPotyagNaLinii().forEach(potyag -> {
+				
+				switch (potyag.getCurentPosition()) {
+			
+			case 0  : InfoStation.setText (6, 5, potyag.getNomerPotyga()); break;
+			case 18 : InfoStation.setText (6, 6, potyag.getNomerPotyga()); break;
+			case 34 : InfoStation.setText (6, 7, potyag.getNomerPotyga()); break;
+			case 43 : InfoStation.setText (6, 8, potyag.getNomerPotyga()); break;
+			case 49 : InfoStation.setText (7, 5, potyag.getNomerPotyga()); break;
+			case 58 : InfoStation.setText (7, 6, potyag.getNomerPotyga()); break;
+			case 74 : InfoStation.setText (7, 7, potyag.getNomerPotyga()); break;
+			case 92 : InfoStation.setText (7, 8, potyag.getNomerPotyga()); break; 
+			}});
+			getlines()[2].getPotyagNaLinii().forEach(potyag -> {
+				
+				switch (potyag.getCurentPosition()) {
+			
+			case 0  : InfoStation.setText (6, 9, potyag.getNomerPotyga());  break;
+			case 11 : InfoStation.setText (6, 10, potyag.getNomerPotyga()); break;
+			case 34 : InfoStation.setText (6, 11, potyag.getNomerPotyga()); break;
+			case 44 : InfoStation.setText (6, 12, potyag.getNomerPotyga()); break;
+			case 50 : InfoStation.setText (7, 9, potyag.getNomerPotyga());  break;
+			case 60 : InfoStation.setText (7, 10, potyag.getNomerPotyga()); break;
+			case 83 : InfoStation.setText (7, 11, potyag.getNomerPotyga()); break;
+			case 94 : InfoStation.setText (7, 12, potyag.getNomerPotyga()); break; 
+			}});
+			*/
 		}}
 	int firstTime=0; 
 	int period=200; 

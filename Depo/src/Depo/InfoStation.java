@@ -69,5 +69,5 @@ public class InfoStation {
 				    }});
 	}
 public static void setText (int i, int j, int kilkist) {labelInfo[i][j].setText(""+kilkist);}
-	
+public static void setText (int i, int j, String str) {labelInfo[i][j].setText(str);}
 }

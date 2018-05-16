@@ -36,7 +36,6 @@ public class Line {
 	int []  getline_T (){return line_T; }
 	int []  getline_N (){return line_N; }
 	Timer getTimer (){return timer;}
-	//void setLichilnikTimer(int lt){lichilnikTimer1=lt;}
 	
 Line (int nomerLinii){
 	
@@ -186,7 +185,11 @@ for (int k=0; k<line_T.length; k++){
 				//dosyag potyg stanzii? 
 				if(i==indexSt_T[j]){  //60 elementiv, 0,16,36,54-index Station_T
 			     praporSt_T=1; 	     
-               
+					
+			     //vidobragau nomer potyaga v InfoStation dlya station11,12,13,14
+			     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (6, j+1, potyagNaLinii.get(tmp3).getNomerPotyga()); 
+			     //else InfoStation.setText (6, 1, "");
+			     
 			     //vigruzka/zagruzka pasagiriv z/v potyaga	
 			    // yaka Station?
 			     StationV station = MetroRuch.stationsRed.get(j);
@@ -194,20 +197,30 @@ for (int k=0; k<line_T.length; k++){
 			    	 if (!potyagNaLinii.get(tmp3).getVsixPasagirivPotyaga().isEmpty()) potyagNaLinii.get(tmp3).vixidV5Potokov();
 			         if (!station.getPasagiriPeron().isEmpty()) potyagNaLinii.get(tmp3).vxidPv5Potokov(station, station.getPasagiriPeron());
 			         }
-			     potyagNaLinii.get(tmp3).setLichilnikSt(potyagNaLinii.get(tmp3).getLichilnikSt()+1);    
+			     potyagNaLinii.get(tmp3).setLichilnikSt(potyagNaLinii.get(tmp3).getLichilnikSt()+1); 
 			     break;
 }
 			     else praporSt_T=0;
 }				
 			// 8 kilkist chasu zupinki potyaga na statzii, 8x6s(6000 timer)=48s
-			if ((potyagNaLinii.get(tmp3).getLichilnikSt()>=8) ||
+			if ((potyagNaLinii.get(tmp3).getLichilnikSt()>8) ||
 				(0==praporSt_T)){
 				line_T[i+1]=line_T[i];
 				line_T[i]=0;
 				System.out.println("RED LineT potyag "+ potyagNaLinii.get(tmp3).getNomerPotyga() + " CurrentPosition "+ potyagNaLinii.get(tmp3).getCurentPosition());
 				potyagNaLinii.get(tmp3).setCurrentPosition(potyagNaLinii.get(tmp3).getCurentPosition()+1);
 }
-			if (potyagNaLinii.get(tmp3).getLichilnikSt()>=8) potyagNaLinii.get(tmp3).setLichilnikSt(0);
+			if (potyagNaLinii.get(tmp3).getLichilnikSt()>8) {
+				potyagNaLinii.get(tmp3).setLichilnikSt(0);
+				if(1==MetroRuch.praporKilkostiIS) {
+					switch (i) {
+					case 0   : InfoStation.setText (6, 1, ""); break;
+					case 16  : InfoStation.setText (6, 2, ""); break;
+					case 36  : InfoStation.setText (6, 3, ""); break;
+					case 54  : InfoStation.setText (6, 4, ""); break;
+					}
+					}	
+			}
 }
 }  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N
     if((0!=line_T [line_T.length-1]) &&
@@ -216,9 +229,11 @@ for (int k=0; k<line_T.length; k++){
     	for(Potyag p: potyagNaLinii){
     		if (line_T [line_T.length-1]==p.getNomerPotyga()){
     			if (p.getMashinist().getDosvid()<10000) p.getMashinist().setDosvid(p.getMashinist().getDosvid()+1);
+    			
     			//stvoruu klas poizdka ta dodau v arraylist poizdki
     	    	Poizdka fakt =  new Poizdka (p.getMashinist(), this.nazvaLinii+"_T");
     	    	MetroRuch.poizdki.add(fakt);
+    	    	
     	    	//zamina mashinistiv
 	    	    MetroRuch.driversRedTMP.add(p.getMashinist());
 	    	    if (MetroRuch.driversRedTMP.size() >= MetroRuch.driversRed.size()) {
@@ -245,6 +260,10 @@ for (int k=0; k<line_T.length; k++){
 			     if(i==indexSt_N[j]){
 			     praporSt_N=1; 
 			     
+			     //vidobragau nomer potyaga v InfoStation dlya station 11,12,13,14
+			     if(1==MetroRuch.praporKilkostiIS)  InfoStation.setText (7, 4-j, potyagNaLinii.get(tmp4).getNomerPotyga());
+			      //else InfoStation.setText (7, 4, "");
+			     
 			   //vigruzka/zagruzka pasagiriv z/v potyaga	
 			  // yaka Station?
 				  StationV station = MetroRuch.stationsRed.get(3-j);//60 elementiv, 0,18,38,54-index Station Line_N
@@ -255,17 +274,27 @@ for (int k=0; k<line_T.length; k++){
 				  potyagNaLinii.get(tmp4).setLichilnikSt(potyagNaLinii.get(tmp4).getLichilnikSt()+1);
 				  break;
 }
-			     else praporSt_N=0;
+			     else praporSt_N=0; 
 }				
-			if ((potyagNaLinii.get(tmp4).getLichilnikSt()>=8) ||
+			if ((potyagNaLinii.get(tmp4).getLichilnikSt()>8) ||
 				(0==praporSt_N)){
 				line_N[i+1]=line_N[i];
 				line_N[i]=0;
-				System.out.println("RED LineN psotyag "+ potyagNaLinii.get(tmp4).getNomerPotyga() + 
+				System.out.println("RED LineN potyag "+ potyagNaLinii.get(tmp4).getNomerPotyga() + 
 				           " CurrentPosition "+ potyagNaLinii.get(tmp4).getCurentPosition());
 				potyagNaLinii.get(tmp4).setCurrentPosition(potyagNaLinii.get(tmp4).getCurentPosition()+1);				
 }
-			if (potyagNaLinii.get(tmp4).getLichilnikSt()>=8) potyagNaLinii.get(tmp4).setLichilnikSt(0);
+			if (potyagNaLinii.get(tmp4).getLichilnikSt()>8) {
+				potyagNaLinii.get(tmp4).setLichilnikSt(0);
+				if(1==MetroRuch.praporKilkostiIS) {
+					switch (i) {
+					case 0   : InfoStation.setText (7, 4, ""); break;
+					case 18  : InfoStation.setText (7, 3, ""); break;
+					case 38  : InfoStation.setText (7, 2, ""); break;
+					case 54  : InfoStation.setText (7, 1, ""); break;
+					}
+					}	
+			}
 }
 }	
   //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
@@ -318,8 +347,6 @@ void vipuskNaLiniuM (Potyag [] mP){
 		    	  }
 		         else System.out.println("Povtor Mashinista v potyazi N"+mP[i].getNomerPotyga());
 		    	 }   
-		    //potyagNaLinii.add(mP[i]);
-			//prapor2=1;
 			mP[i].setDepoKey("Na linii "+this.getNazvaLinii());
 			mP[i].getPotyg().forEach(v->v.setNazvaDepoKey("Na linii "+this.getNazvaLinii()));
 			mP[i].setLineKey(this.getNazvaLinii());
@@ -396,13 +423,13 @@ void vipuskNaLiniuM (Potyag [] mP){
 				     else praporSt_T=0;
 	}				
 				// 8 kilkist chasu zupinki potyaga na statzii, 8x6s(6000 timer)=48s
-				if ((potyagNaLinii.get(tmp3).getLichilnikSt()>=8) ||
+				if ((potyagNaLinii.get(tmp3).getLichilnikSt()>8) ||
 					(0==praporSt_T)){
 					line_T[i+1]=line_T[i];
 					line_T[i]=0;
 					potyagNaLinii.get(tmp3).setCurrentPosition(potyagNaLinii.get(tmp3).getCurentPosition()+1);
 	}
-				if (potyagNaLinii.get(tmp3).getLichilnikSt()>=8) potyagNaLinii.get(tmp3).setLichilnikSt(0);
+				if (potyagNaLinii.get(tmp3).getLichilnikSt()>8) potyagNaLinii.get(tmp3).setLichilnikSt(0);
 	}
 	}  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N 
 	    if((0!=line_T [line_T.length-1]) &&
@@ -451,13 +478,13 @@ void vipuskNaLiniuM (Potyag [] mP){
 	}
 				     else praporSt_N=0;
 	}				
-				if ((potyagNaLinii.get(tmp4).getLichilnikSt()>=8) ||
+				if ((potyagNaLinii.get(tmp4).getLichilnikSt()>8) ||
 					(0==praporSt_N)){
 					line_N[i+1]=line_N[i];
 					line_N[i]=0;
 					potyagNaLinii.get(tmp4).setCurrentPosition(potyagNaLinii.get(tmp4).getCurentPosition()+1);
 	}
-				if (potyagNaLinii.get(tmp4).getLichilnikSt()>=8) potyagNaLinii.get(tmp4).setLichilnikSt(0);
+				if (potyagNaLinii.get(tmp4).getLichilnikSt()>8) potyagNaLinii.get(tmp4).setLichilnikSt(0);
 	}
 	}	
 	  //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
@@ -589,13 +616,13 @@ void vipuskNaLiniuM (Potyag [] mP){
 					     else praporSt_T=0;
 		}				
 					// 8 kilkist chasu zupinki potyaga na statzii, 8x6s(6000 timer)=48s
-					if ((potyagNaLinii.get(tmp5).getLichilnikSt()>=8) ||
+					if ((potyagNaLinii.get(tmp5).getLichilnikSt()>8) ||
 						(0==praporSt_T)){
 						line_T[i+1]=line_T[i];
 						line_T[i]=0;
 						potyagNaLinii.get(tmp5).setCurrentPosition(potyagNaLinii.get(tmp5).getCurentPosition()+1);
 		}
-					if (potyagNaLinii.get(tmp5).getLichilnikSt()>=8) potyagNaLinii.get(tmp5).setLichilnikSt(0);
+					if (potyagNaLinii.get(tmp5).getLichilnikSt()>8) potyagNaLinii.get(tmp5).setLichilnikSt(0);
 		}
 		}  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N 
 		    if((0!=line_T [line_T.length-1]) &&
@@ -644,13 +671,13 @@ void vipuskNaLiniuM (Potyag [] mP){
 		}
 					     else praporSt_N=0;
 		}				
-					if ((potyagNaLinii.get(tmp6).getLichilnikSt()>=8) ||
+					if ((potyagNaLinii.get(tmp6).getLichilnikSt()>8) ||
 						(0==praporSt_N)){
 						line_N[i+1]=line_N[i];
 						line_N[i]=0;
 						potyagNaLinii.get(tmp6).setCurrentPosition(potyagNaLinii.get(tmp6).getCurentPosition()+1);
 		}
-					if (potyagNaLinii.get(tmp6).getLichilnikSt()>=8) potyagNaLinii.get(tmp6).setLichilnikSt(0);
+					if (potyagNaLinii.get(tmp6).getLichilnikSt()>8) potyagNaLinii.get(tmp6).setLichilnikSt(0);
 		}
 		}	
 		  //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
