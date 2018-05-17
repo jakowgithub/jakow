@@ -243,19 +243,6 @@ void showAllStation () {
 			InfoStation.setText (8, 13, Vixid.pasagiriVixid.size());
 			
 			/**
-			for (Potyag potyag: getlines()[0].getPotyagNaLinii()){
-			
-				if (0==  potyag.getCurentPosition()) InfoStation.setText (6, 1, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 1, " ");
-				if (16== potyag.getCurentPosition()) InfoStation.setText (6, 2, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 2, " ");
-				if (36== potyag.getCurentPosition()) InfoStation.setText (6, 3, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 3, " ");
-				if (54== potyag.getCurentPosition()) InfoStation.setText (6, 4, potyag.getNomerPotyga()); //else  InfoStation.setText (6, 4, " ");
-				if (60== potyag.getCurentPosition()) InfoStation.setText (7, 1, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 1, " ");
-				if (78== potyag.getCurentPosition()) InfoStation.setText (7, 2, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 2, " ");
-				if (98== potyag.getCurentPosition()) InfoStation.setText (7, 3, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 3, " ");
-				if (114==potyag.getCurentPosition()) InfoStation.setText (7, 4, potyag.getNomerPotyga()); //else  InfoStation.setText (7, 4, " ");
-			}
-			
-			
 			getlines()[1].getPotyagNaLinii().forEach(potyag -> {
 				
 				switch (potyag.getCurentPosition()) {

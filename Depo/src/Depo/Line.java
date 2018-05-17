@@ -188,7 +188,6 @@ for (int k=0; k<line_T.length; k++){
 					
 			     //vidobragau nomer potyaga v InfoStation dlya station11,12,13,14
 			     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (6, j+1, potyagNaLinii.get(tmp3).getNomerPotyga()); 
-			     //else InfoStation.setText (6, 1, "");
 			     
 			     //vigruzka/zagruzka pasagiriv z/v potyaga	
 			    // yaka Station?
@@ -218,8 +217,7 @@ for (int k=0; k<line_T.length; k++){
 					case 16  : InfoStation.setText (6, 2, ""); break;
 					case 36  : InfoStation.setText (6, 3, ""); break;
 					case 54  : InfoStation.setText (6, 4, ""); break;
-					}
-					}	
+					}}	
 			}
 }
 }  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N
@@ -262,7 +260,6 @@ for (int k=0; k<line_T.length; k++){
 			     
 			     //vidobragau nomer potyaga v InfoStation dlya station 11,12,13,14
 			     if(1==MetroRuch.praporKilkostiIS)  InfoStation.setText (7, 4-j, potyagNaLinii.get(tmp4).getNomerPotyga());
-			      //else InfoStation.setText (7, 4, "");
 			     
 			   //vigruzka/zagruzka pasagiriv z/v potyaga	
 			  // yaka Station?
@@ -280,8 +277,7 @@ for (int k=0; k<line_T.length; k++){
 				(0==praporSt_N)){
 				line_N[i+1]=line_N[i];
 				line_N[i]=0;
-				System.out.println("RED LineN potyag "+ potyagNaLinii.get(tmp4).getNomerPotyga() + 
-				           " CurrentPosition "+ potyagNaLinii.get(tmp4).getCurentPosition());
+				System.out.println("RED LineN potyag "+ potyagNaLinii.get(tmp4).getNomerPotyga() + " CurrentPosition "+ potyagNaLinii.get(tmp4).getCurentPosition());
 				potyagNaLinii.get(tmp4).setCurrentPosition(potyagNaLinii.get(tmp4).getCurentPosition()+1);				
 }
 			if (potyagNaLinii.get(tmp4).getLichilnikSt()>8) {
@@ -292,8 +288,7 @@ for (int k=0; k<line_T.length; k++){
 					case 18  : InfoStation.setText (7, 3, ""); break;
 					case 38  : InfoStation.setText (7, 2, ""); break;
 					case 54  : InfoStation.setText (7, 1, ""); break;
-					}
-					}	
+					}}	
 			}
 }
 }	
@@ -410,6 +405,9 @@ void vipuskNaLiniuM (Potyag [] mP){
 				     if(i==indexSt_T[j]){//Blueline 49 elementiv,  index Station_Tuda 0,18,34,43 / index Station_Nazad 0,9,25, 43 
 				     praporSt_T=1; 
 				     
+				   //vidobragau nomer potyaga v InfoStation dlya station21,22,23,24
+				     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (6, j+5, potyagNaLinii.get(tmp3).getNomerPotyga()); 
+				     
 				     //vigruzka/zagruzka pasagiriv z/v potyaga	
 					// yaka Station?
 				     StationV station= MetroRuch.stationsBlue.get(j);
@@ -429,7 +427,16 @@ void vipuskNaLiniuM (Potyag [] mP){
 					line_T[i]=0;
 					potyagNaLinii.get(tmp3).setCurrentPosition(potyagNaLinii.get(tmp3).getCurentPosition()+1);
 	}
-				if (potyagNaLinii.get(tmp3).getLichilnikSt()>8) potyagNaLinii.get(tmp3).setLichilnikSt(0);
+				if (potyagNaLinii.get(tmp3).getLichilnikSt()>8) {
+					potyagNaLinii.get(tmp3).setLichilnikSt(0);
+					if(1==MetroRuch.praporKilkostiIS) {
+						switch (i) {
+						case 0   : InfoStation.setText (6, 5, ""); break;
+						case 18  : InfoStation.setText (6, 6, ""); break;
+						case 34  : InfoStation.setText (6, 7, ""); break;
+						case 43  : InfoStation.setText (6, 8, ""); break;
+						}}	
+				}
 	}
 	}  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N 
 	    if((0!=line_T [line_T.length-1]) &&
@@ -465,7 +472,11 @@ void vipuskNaLiniuM (Potyag [] mP){
 				for (int j=0; j<indexSt_N.length; j++){//dosyag potyg stanzii?
 				     if(i==indexSt_N[j]){//49 elementiv,  index Station_Tuda 0,18,34,43 / index Station_Nazad 0,9,25, 43
 				     praporSt_N=1; 
-				       
+				     
+				     //vidobragau nomer potyaga v InfoStation dlya station21,22,23,24
+				     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (7, 8-j, potyagNaLinii.get(tmp4).getNomerPotyga()); 
+				     
+				     
 				   //vigruzka/zagruzka pasagiriv z/v potyaga	
 				   // yaka Station?
 				     StationV station = MetroRuch.stationsBlue.get(3-j);
@@ -484,7 +495,16 @@ void vipuskNaLiniuM (Potyag [] mP){
 					line_N[i]=0;
 					potyagNaLinii.get(tmp4).setCurrentPosition(potyagNaLinii.get(tmp4).getCurentPosition()+1);
 	}
-				if (potyagNaLinii.get(tmp4).getLichilnikSt()>8) potyagNaLinii.get(tmp4).setLichilnikSt(0);
+				if (potyagNaLinii.get(tmp4).getLichilnikSt()>8) {
+					potyagNaLinii.get(tmp4).setLichilnikSt(0);
+					if(1==MetroRuch.praporKilkostiIS) {
+						switch (i) {
+						case 0   : InfoStation.setText (7, 8, ""); break;
+						case 9   : InfoStation.setText (7, 7, ""); break;
+						case 25  : InfoStation.setText (7, 6, ""); break;
+						case 43  : InfoStation.setText (7, 5, ""); break;
+						}}
+				}
 	}
 	}	
 	  //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
@@ -602,7 +622,11 @@ void vipuskNaLiniuM (Potyag [] mP){
 						}			
 					for (int j=0; j<indexSt_T.length; j++){//dosyag potyg stanzii?
 					     if(i==indexSt_T[j]){//Greenline 50 elementiv,  index Station_Tuda 0,11,34,44 / index Station_Nazad 0,10,33, 44 
-					     praporSt_T=1;      
+					     praporSt_T=1;     
+					     
+					   //vidobragau nomer potyaga v InfoStation dlya station31,32,33,34
+					     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (6, j+9, potyagNaLinii.get(tmp5).getNomerPotyga()); 
+					     		     
 					     //vigruzka/zagruzka pasagiriv z/v potyaga	
 						// yaka Station?
 					     StationV station = MetroRuch.stationsGreen.get(j);
@@ -622,7 +646,16 @@ void vipuskNaLiniuM (Potyag [] mP){
 						line_T[i]=0;
 						potyagNaLinii.get(tmp5).setCurrentPosition(potyagNaLinii.get(tmp5).getCurentPosition()+1);
 		}
-					if (potyagNaLinii.get(tmp5).getLichilnikSt()>8) potyagNaLinii.get(tmp5).setLichilnikSt(0);
+					if (potyagNaLinii.get(tmp5).getLichilnikSt()>8) {
+						potyagNaLinii.get(tmp5).setLichilnikSt(0);
+						if(1==MetroRuch.praporKilkostiIS) {
+							switch (i) {
+							case 0   : InfoStation.setText (6, 9,  ""); break;
+							case 11  : InfoStation.setText (6, 10, ""); break;
+							case 34  : InfoStation.setText (6, 11, ""); break;
+							case 44  : InfoStation.setText (6, 12, ""); break;
+							}}	
+					}
 		}
 		}  //potyag dosyag ostanjogo elementa line_T -> perexid na line_N 
 		    if((0!=line_T [line_T.length-1]) &&
@@ -658,7 +691,10 @@ void vipuskNaLiniuM (Potyag [] mP){
 					for (int j=0; j<indexSt_N.length; j++){//dosyag potyg stanzii?
 					     if(i==indexSt_N[j]){//Greenline 50 elementiv,  index Station_Tuda 0,11,34,44 / index Station_Nazad 0,10,33, 44 
 					     praporSt_N=1; 
-					       
+					     
+					   //vidobragau nomer potyaga v InfoStation dlya station21,22,23,24
+					     if(1==MetroRuch.praporKilkostiIS) InfoStation.setText (7, 12-j, potyagNaLinii.get(tmp6).getNomerPotyga()); 
+					            
 					   //vigruzka/zagruzka pasagiriv z/v potyaga	
 					   // yaka Station?
 					     StationV station = MetroRuch.stationsGreen.get(3-j);
@@ -677,7 +713,16 @@ void vipuskNaLiniuM (Potyag [] mP){
 						line_N[i]=0;
 						potyagNaLinii.get(tmp6).setCurrentPosition(potyagNaLinii.get(tmp6).getCurentPosition()+1);
 		}
-					if (potyagNaLinii.get(tmp6).getLichilnikSt()>8) potyagNaLinii.get(tmp6).setLichilnikSt(0);
+					if (potyagNaLinii.get(tmp6).getLichilnikSt()>8) {
+						potyagNaLinii.get(tmp6).setLichilnikSt(0);
+						if(1==MetroRuch.praporKilkostiIS) {
+							switch (i) {
+							case 0   : InfoStation.setText (7, 12,  ""); break;
+							case 10  : InfoStation.setText (7, 11, ""); break;
+							case 33  : InfoStation.setText (7, 10, ""); break;
+							case 44  : InfoStation.setText (7, 9,  ""); break;
+							}}
+					}
 		}
 		}	
 		  //potyag dosyag ostanjogo elementa line_N -> perexid na line_T, currentPosition=0, LichilnikSt=0; 
