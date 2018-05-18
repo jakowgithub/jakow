@@ -41,7 +41,8 @@ public static PriorityBlockingQueue <Mashinist>  driversBlueTMP = new PriorityBl
 public static PriorityBlockingQueue <Mashinist>  driversGreen = new PriorityBlockingQueue <>(100, comparatorMashinist);
 public static PriorityBlockingQueue <Mashinist>  driversGreenTMP = new PriorityBlockingQueue <>(100, comparatorMashinist);
 
-public static int praporKilkostiIS=0; 
+public static int praporKilkostiIS=0;
+public static int praporKilkostiIT=0;
 
 Line[] metroRuch(){
 	Depo depo1=new Depo (18,12, NazvaDepo.DepoDarniza);
@@ -177,8 +178,7 @@ void formaIS () {
 	if (0==praporKilkostiIS) {
 		InfoStation fIS = new InfoStation();
 		praporKilkostiIS=1;
-	}
-}
+	}}
 //metod vidobragae kilkist pasagiriv v rozrizi stanzij 
 void showAllStation () {
 		
@@ -186,11 +186,7 @@ void showAllStation () {
 		
 		SumaVestibulAll(){}    
 		
-		int sumaVestibul=0, 
-			sumaEsk1=0, 
-			sumaEsk2=0, 
-			sumaEsk3=0,
-			sumaPeron=0; 
+		int sumaVestibul, sumaEsk1, sumaEsk2, sumaEsk3, sumaPeron; 
 		
 		public void run() {  
 			//perebirau vsi stanzii
@@ -241,35 +237,6 @@ void showAllStation () {
 			InfoStation.setText (4, 13, sumaEsk3);
 			InfoStation.setText (5, 13, sumaPeron);
 			InfoStation.setText (8, 13, Vixid.pasagiriVixid.size());
-			
-			/**
-			getlines()[1].getPotyagNaLinii().forEach(potyag -> {
-				
-				switch (potyag.getCurentPosition()) {
-			
-			case 0  : InfoStation.setText (6, 5, potyag.getNomerPotyga()); break;
-			case 18 : InfoStation.setText (6, 6, potyag.getNomerPotyga()); break;
-			case 34 : InfoStation.setText (6, 7, potyag.getNomerPotyga()); break;
-			case 43 : InfoStation.setText (6, 8, potyag.getNomerPotyga()); break;
-			case 49 : InfoStation.setText (7, 5, potyag.getNomerPotyga()); break;
-			case 58 : InfoStation.setText (7, 6, potyag.getNomerPotyga()); break;
-			case 74 : InfoStation.setText (7, 7, potyag.getNomerPotyga()); break;
-			case 92 : InfoStation.setText (7, 8, potyag.getNomerPotyga()); break; 
-			}});
-			getlines()[2].getPotyagNaLinii().forEach(potyag -> {
-				
-				switch (potyag.getCurentPosition()) {
-			
-			case 0  : InfoStation.setText (6, 9, potyag.getNomerPotyga());  break;
-			case 11 : InfoStation.setText (6, 10, potyag.getNomerPotyga()); break;
-			case 34 : InfoStation.setText (6, 11, potyag.getNomerPotyga()); break;
-			case 44 : InfoStation.setText (6, 12, potyag.getNomerPotyga()); break;
-			case 50 : InfoStation.setText (7, 9, potyag.getNomerPotyga());  break;
-			case 60 : InfoStation.setText (7, 10, potyag.getNomerPotyga()); break;
-			case 83 : InfoStation.setText (7, 11, potyag.getNomerPotyga()); break;
-			case 94 : InfoStation.setText (7, 12, potyag.getNomerPotyga()); break; 
-			}});
-			*/
 		}}
 	int firstTime=0; 
 	int period=200; 
@@ -277,5 +244,10 @@ void showAllStation () {
     timerSuma.schedule(new SumaVestibulAll(), firstTime, period);
 	}
 
-void showOneStation (JButton button) {}
+void formaInfoTrain () {
+	if (0==praporKilkostiIT) {
+		InfoTrain formaIT = new InfoTrain();
+		praporKilkostiIT=1;
+	}}
+
 }

@@ -67,12 +67,10 @@ for(int i=0; i<12; i++){
 	buttonWest[i].addActionListener((aL)->{});
 	}
 buttonWest[0].addActionListener((aL)->{
-	if ((mr.lines[2]!= null) &&
-	    (mr.lines[1]!= null) &&
-	    (mr.lines[0]!= null))
-	{
+	if ((mr.lines[2]!= null) && (mr.lines[1]!= null) && (mr.lines[0]!= null)) {
 	mr.formaIS();
 	mr.showAllStation();
+	mr.formaInfoTrain();
 	}
 	});
 for (int i=0; i<3; i++){
