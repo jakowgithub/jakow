@@ -294,12 +294,12 @@ void vixidV5Potokov (){
 				for (Pasagir pas: vagon.getPasigirVagon())  {
 				    //kinzeva Station (LineT/LineN) - vixid vsix pasagiriv
 					//currentPosition=54,114 - RedLine, currentPosition=43,92 - BlueLine 
-					if( (54 == this.currentPosition) || //&& (this.getLineKey().equals("Red")))  
-				        (114== this.currentPosition) || //&& (this.getLineKey().equals("Red"))   
-				        (43 == this.currentPosition) || //&& (this.getLineKey().equals("Blue"))
-				        (92 == this.currentPosition) || //&& (this.getLineKey().equals("Blue")))
-				        (44 == this.currentPosition) || //&& (this.getLineKey().equals("Green")))
-				        (94 == this.currentPosition)) { //&& (this.getLineKey().equals("Green")))
+					if( (54 == this.currentPosition) ||   
+				        (114== this.currentPosition) ||   
+				        (43 == this.currentPosition) || 
+				        (92 == this.currentPosition) || 
+				        (44 == this.currentPosition) || 
+				        (94 == this.currentPosition)) { 
 				    	synchronized (Vixid.pasagiriVixid) {Vixid.pasagiriVixid.add(pas);}
 				        pasagiriTMP.add(pas);
 					    System.out.println("Potyag "+ getNomerPotyga() + " Vagon "+ vagon.getNomerVagona()+" kinzeva " + pas.getPIB()+" currentPosition "+this.currentPosition+" LineKey " + this.getLineKey());

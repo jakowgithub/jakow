@@ -14,7 +14,7 @@ public class MetroRuch {
 
 SchemaMetro schemaMetro;
 MetroRuch (SchemaMetro schemaMetro) {this.schemaMetro = schemaMetro;}
-Line[] lines =new Line[3];
+Line[] lines = new Line[3];
 
 static List <StationV> stationsRed = new ArrayList<>();
 static List <StationV> stationsBlue = new ArrayList<>();
@@ -249,5 +249,42 @@ void formaInfoTrain () {
 		InfoTrain formaIT = new InfoTrain();
 		praporKilkostiIT=1;
 	}}
+void infoTrain_Red(JButton clickedButtonRed) {
+	InfoTrain.setText(1, 1, "RED");
+	InfoTrain.setText(1, 2, "====");
+	int currentPosition=0;
+	for (int i=0; i<=115; i++) {
+		if (schemaMetro.getJButtonRed(i)==clickedButtonRed) {
+			
+			if (i<55)  currentPosition = 112-i;
+			if (55==i) currentPosition = 57;
+			if (56==i) currentPosition = 56;
+			if (57==i) currentPosition = 113;
+			if (58==i) currentPosition = 55;
+			if (59==i) currentPosition = 114;
+			if (60==i) currentPosition = 115;
+			if (i>60)  currentPosition = i-61;
+			
+			if (this.lines[0]!=null) {
+				for (Potyag potyag: this.lines[0].getPotyagNaLinii()) {
+					if ((potyag.getCurentPosition()  == currentPosition)   ||
+						(potyag.getCurentPosition()  == currentPosition+1) ||
+						(potyag.getCurentPosition()  == currentPosition-1)) {
+						InfoTrain.setText(2, 1, potyag.getMashinist().getPIB());
+						InfoTrain.setText(2, 2, "====");
+						InfoTrain.setText(3, 1, potyag.getNomerPotyga());
+						InfoTrain.setText(3, 2, potyag.getPotochnaKilkistPasagiriv());
+						InfoTrain.setText(4, 1, potyag.getPotyg().get(0).getNomerVagona());
+						InfoTrain.setText(4, 2, potyag.getPotyg().get(0).getKilkistPasagirVVagone());
+						InfoTrain.setText(4, 3, potyag.getPotyg().get(0).getNazvaVagona());
+						InfoTrain.setText(5, 1, potyag.getPotyg().get(1).getNomerVagona());
+						InfoTrain.setText(5, 2, potyag.getPotyg().get(1).getKilkistPasagirVVagone());
+						InfoTrain.setText(5, 3, potyag.getPotyg().get(1).getNazvaVagona());
+						
+						
+					}}}
+			break;
+		}}
+	}
 
 }

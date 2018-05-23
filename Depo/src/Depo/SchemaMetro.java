@@ -1,5 +1,6 @@
 package Depo;
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -52,10 +53,10 @@ MetroRuch mr = new MetroRuch (this);
 panelWest.setLayout(new GridLayout (24,1));
 panelWest.add(buttonStart); 
 buttonStart.addActionListener((ae)->{mr.lines = mr.metroRuch(); }); 
-panelWest.add(buttonStop); //buttonStop.setFont(kursiv);
+panelWest.add(buttonStop); 
 buttonStop.addActionListener((ae)->{mr.metroStop(mr.getlines());}); 
 for(int i=0; i<10; i++){
-	buttonWest[i]=new JButton("S "+(i+1)*10);//buttonWest[i].setFont(kursiv);
+	buttonWest[i]=new JButton("S "+(i+1)*10);
 	panelWest.add(buttonWest[i]);
 	buttonWest[i].addActionListener((ae)->{});
 	}
@@ -70,7 +71,7 @@ buttonWest[0].addActionListener((aL)->{
 	if ((mr.lines[2]!= null) && (mr.lines[1]!= null) && (mr.lines[0]!= null)) {
 	mr.formaIS();
 	mr.showAllStation();
-	mr.formaInfoTrain();
+	
 	}
 	});
 for (int i=0; i<3; i++){
@@ -80,20 +81,32 @@ for (int i=0; i<3; i++){
     buttonStation [i][j].setBorder(ramkaGovta3);
     buttonStation [i][j].addActionListener((ae)->{});
 }}
-for (int i=0; i<120; i++){buttonRedLine1 [i]=new JButton(); buttonRedLine1 [i].setFont(k8);} 
-for (int i=0; i<98; i++){buttonBlueLine2 [i]=new JButton(); buttonBlueLine2 [i].setFont(k8);}
-for (int i=0; i<100; i++){buttonGreenLine3 [i]=new JButton();}
-//new JButton(""+i); buttonGreenLine3 [i].setFont(k6); buttonGreenLine3 [i].setBorder(ramkaGovta1);
+for (int i=0; i<120; i++){
+	buttonRedLine1 [i]=new JButton(); 
+	buttonRedLine1 [i].setFont(k8); 
+	buttonRedLine1 [i].addActionListener (al -> {
+		mr.formaInfoTrain();
+		JButton clickedButtonRed = (JButton) al.getSource();
+		mr.infoTrain_Red(clickedButtonRed);
+		});
+	} 
+for (int i=0; i<98; i++){ 
+	buttonBlueLine2 [i]=new JButton(); 
+	buttonBlueLine2 [i].setFont(k8);
+	}
+for (int i=0; i<100; i++){
+	buttonGreenLine3 [i]=new JButton(); 
+	buttonGreenLine3 [i].setFont(k8);
+	}
+
 for (int i=0; i<50; i++){
     for (int j=0; j<60; j++){ 
     	labelPole [i][j]=new JLabel();	
 if ((41==j)&&((2==i)||(20==i)||(36==i)||(45==i))){ 
-	//buttonStation [1][b].setBackground(Color.BLUE);	
 	panelZentr.add(buttonStation [1][b]);
 	    b++;	
 	} 
-else {if((33==i)&&((2==j)||(18==j)||(38==j)||(56==j))){
-	//buttonStation [0][r].setBackground(Color.RED);	        
+else {if((33==i)&&((2==j)||(18==j)||(38==j)||(56==j))){        
 	panelZentr.add(buttonStation [0][r]);
              r++;
     }       
@@ -101,16 +114,11 @@ else {if(((3==i)&&(48==j))  ||
 	     ((13==i)&&(38==j)) ||     
 	     ((36==i)&&(15==j)) ||
          ((47==i)&&(4==j))){
-	      //buttonStation [2][g].setBackground(Color.GREEN);	
           panelZentr.add(buttonStation [2][3-g]);
            g++;
     }	
 else {if (((40==j)||(42==j))&&(i<=47) ||
 		  ((41==j)&&((0==i)||(47==i)))) {
-//kolir fona, obovyazkovo .setOpaque (true)
-     //labelPole [i][j].setBackground(Color.BLUE);
-     //labelPole [i][j].setOpaque (true);
-     //panelZentr.add(labelPole [i][j]);
 	buttonBlueLine2 [bBL2].setBackground(Color.BLUE);
 	panelZentr.add(buttonBlueLine2 [bBL2]);
 	bBL2++;
@@ -210,7 +218,7 @@ static void resetRamkaGovta (int x, JButton buttonL []){
 //metod stjrae ruch potyagiv RedLine1_T 
 static void deleteRedLine1_T (int x){
 	    int curX=x+61;
-	    if (curX>100)curX-=2;
+	    if (curX>100) curX-=2;
 		if (curX>115){
 			switch (curX){
 			case 116: curX=58; break;
@@ -400,6 +408,14 @@ static void deleteGreenLine3_N (int x){
 	resetRamkaGovta(curX, buttonGreenLine3);
 	buttonGreenLine3[curX].setText("");
 }
+//method nadae JButton RedLine
+JButton getJButtonRed (int i) {return buttonRedLine1 [i];}
+//method nadae JButton BlueLine
+JButton getJButtonBlue (int i) {return buttonBlueLine2 [i];}
+//method nadae JButton GreenLine
+JButton getJButtonGreen (int i) {return buttonGreenLine3 [i];}
+
+
 
 public static void main (String[] args) {
 		SchemaMetro sM = new SchemaMetro(); 		
