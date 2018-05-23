@@ -256,7 +256,7 @@ void infoTrain_Red(JButton clickedButtonRed) {
 	for (int i=0; i<=115; i++) {
 		if (schemaMetro.getJButtonRed(i)==clickedButtonRed) {
 			
-			if (i<55)  currentPosition = 112-i;
+			if (i<55)  currentPosition = 112-i+3;
 			if (55==i) currentPosition = 57;
 			if (56==i) currentPosition = 56;
 			if (57==i) currentPosition = 113;
@@ -274,13 +274,12 @@ void infoTrain_Red(JButton clickedButtonRed) {
 						InfoTrain.setText(2, 2, "====");
 						InfoTrain.setText(3, 1, potyag.getNomerPotyga());
 						InfoTrain.setText(3, 2, potyag.getPotochnaKilkistPasagiriv());
-						InfoTrain.setText(4, 1, potyag.getPotyg().get(0).getNomerVagona());
-						InfoTrain.setText(4, 2, potyag.getPotyg().get(0).getKilkistPasagirVVagone());
-						InfoTrain.setText(4, 3, potyag.getPotyg().get(0).getNazvaVagona());
-						InfoTrain.setText(5, 1, potyag.getPotyg().get(1).getNomerVagona());
-						InfoTrain.setText(5, 2, potyag.getPotyg().get(1).getKilkistPasagirVVagone());
-						InfoTrain.setText(5, 3, potyag.getPotyg().get(1).getNazvaVagona());
 						
+						for (int k=0; k<5; k++) {
+							InfoTrain.setText(4+k, 1, potyag.getPotyg().get(k).getNomerVagona());
+							InfoTrain.setText(4+k, 2, potyag.getPotyg().get(k).getKilkistPasagirVVagone());
+							InfoTrain.setText(4+k, 3, potyag.getPotyg().get(k).getNazvaVagona());
+						}						
 						
 					}}}
 			break;

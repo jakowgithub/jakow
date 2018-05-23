@@ -22,13 +22,13 @@ public class InfoTrain {
 		    for (int j=0; j<4; j++){ 
 		    	
 		    	if (0==i) {
-		    		if (0==j) labelInfo [i][j]=new JLabel(); 
+		    		if (0==j) labelInfo [i][j]=new JLabel("Parametr"); 
 		    		if (1==j) labelInfo [i][j]=new JLabel("Value");
 		    		if (2==j) labelInfo [i][j]=new JLabel("Pasagir");
 		    		if (3==j) labelInfo [i][j]=new JLabel("Notes");
 		    	}
 		    	else if (0==j) {
-		    		    if (0==i) labelInfo [i][j]=new JLabel();
+		    		    //if (0==i) labelInfo [i][j]=new JLabel();
 		    		    if (1==i) labelInfo [i][j]=new JLabel("Line");
 		    		    if (2==i) labelInfo [i][j]=new JLabel("Driver");
 		    		    if (3==i) labelInfo [i][j]=new JLabel("Train");
@@ -51,15 +51,15 @@ public class InfoTrain {
 	frame.setContentPane(vmistVikna);
 	frame.setLocation(90, 245);
 	//Zadau dostatnij rozmir vikna
-	frame.pack();
-	//frame.setSize(230, 650);
+	//frame.pack();
+	frame.setSize(400, 180);
 	//Vidobragaem vikno
 	frame.setVisible(true);
 	//vstanjvluu operaziu pri zakritti vikna
 	//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	frame.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-				MetroRuch.praporKilkostiIS=0;
+				MetroRuch.praporKilkostiIT=0;
 			    //System.exit(0);
 			    }});
 	}
